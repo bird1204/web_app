@@ -1,0 +1,9 @@
+section.section.item-wrapper
+  .container.is-fluid
+    .columns.is-multiline.is-mobile itemscope="" itemtype="http://schema.org/ItemList"
+      - gamaitems.each do |item|
+        .column.is-one-mobile.is-one-half-tablet.is-one-third-desktop itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem"
+          meta itemprop="url" content=gamaitem_url(id: item.id)
+          meta itemprop="position" content=gamaitems.index(item)+1
+          div itemscope="" itemtype="http://schema.org/Product"
+            = render partial: "layouts/item", :locals => {item: item}

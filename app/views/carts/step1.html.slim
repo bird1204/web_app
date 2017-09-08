@@ -1,0 +1,36 @@
+
+- content_for :javascript do
+  = javascript_include_tag 'order_preview', defer: 'defer'
+
+.cart-checkout
+  = render partial: "carts/order_header", :locals => {step: 1}
+
+section.section.checkout-section
+  .container
+    = form_tag carts_checkout_path do
+
+      = render partial: "carts/delivery_method"
+
+      / order from web
+      input type="hidden" name="os_type" value="3"
+
+      = render partial: "carts/apply_coupon"
+
+      = render partial: 'carts/order_preview'
+
+      .form-section
+        .input-padding
+        .input-row
+          = submit_tag '下一步 >', class: 'action-button'
+
+
+javascript:
+  dataLayer.push(#{step_n_datalayer(1, @cart).to_json.html_safe})
+  fbq('track', 'InitiateCheckout', { 
+      content_type: 'product', 
+      content_ids: #{@cart.line_items.map(&:gamaitem_id)}, 
+      value: #{@cart.total_amount - @cart.coupon_value}, 
+      currency: 'TWD'
+    }
+  )
+

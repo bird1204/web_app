@@ -1,0 +1,50 @@
+@import import
+
+.static-section
+  background-color: $background-gray
+
+  .page-title
+    @include font-size(36px)
+    color: $form-title
+    font-weight: $font-weight-title
+
+  .sub-title
+    @include font-size(32px)
+    color: $title-black
+
+  .text
+    @include font-size(18px)
+    color: $text-black
+
+  .question-wrapper
+    width: 100%
+    background-color: $white
+    border-radius: 6px
+    margin: 10px auto
+
+    .question
+      @include font-size(18px)
+      font-weight: $font-weight-title
+      color: $title-black
+      padding: 20px 18px
+
+    .arrow-icon
+      float: right
+      margin-right: 20px
+      color: $form-title
+
+    .arrow-icon-up
+      content: '▲'
+
+    .arrow-icon-down
+      content: '▼'
+
+    .answer
+      @include font-size(18px)
+      color: $text-black
+      padding: 0 18px 20px
+
+  .faq-container
+    width: 90%
+    max-width: 770px
+    margin-bottom: 50px

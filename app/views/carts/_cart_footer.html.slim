@@ -1,0 +1,5 @@
+.footer-row.checkout-button-row
+  - if cart.line_items.size() > 0
+    = link_to members_signin_cart_path, class: 'is-mobile'
+      span.checkout-button
+        | 立即結帳

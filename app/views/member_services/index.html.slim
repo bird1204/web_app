@@ -1,0 +1,5 @@
+.member-service-container.member-service-list-container
+	- @member_services.each do |ms_row|
+		.column
+			a[href=member_service_path(id: ms_row.id)]
+				= render partial: "member_service_row", :locals => {member_service: ms_row}

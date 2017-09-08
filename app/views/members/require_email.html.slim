@@ -1,0 +1,20 @@
+.member-signin
+  .signin-container
+    .title
+      | 需要追蹤訂單進度嗎？
+      br 請輸入E-mail 😃
+    = form_tag members_signin_path, method: :POST do
+      .login-form
+        p.control.has-icon
+          input.signin-input type="email" name="email" placeholder="E-mail" required="true"
+          span.input-icon
+            = render partial: "svg/email"
+        p.control.has-icon
+          input.signin-input type="email" name="confirm-email" placeholder="再次輸入E-mail" required="true" data-dependent-validation="email" data-errormessage-dependent="E-mail不一致，請重新輸入"
+          span.input-icon
+            = render partial: "svg/email"
+        = hidden_field_tag "password", nil
+        = hidden_field_tag "provider", params[:provider]
+        = hidden_field_tag "facebook_token", params[:facebook_token]
+        = hidden_field_tag "user_id", params[:user_id]
+        = submit_tag "確認", :class => "submit-button"

@@ -1,0 +1,382 @@
+@import import
+
+.header
+  width: 100%
+  position: fixed
+  top: 0
+  background-color: $gama-blue
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .32)
+  z-index: $z-index-header
+
+  .nav
+    background-color: $gama-blue
+    max-width: $max-width
+    margin: 0 auto
+
+.nav
+  .is-brand
+    margin-top: 7px
+
+    img
+      @include is-mobile-view(false)
+        height: 63px
+      @include is-mobile-view(true)
+        height: 30px
+        margin: 1px auto
+      
+
+  .nav-item
+    color: $white
+
+    i
+      position: relative
+    a
+      &:visited
+        color: #69707a
+
+  .nav-left
+    margin-left: 20px
+
+
+  .nav-right
+    margin-right: 20px
+
+  .nav-toggle
+    &:hover
+      background-color: rgba(0, 0, 0, 0)
+    &:active
+      background-color: #f5f7fa
+
+    span
+      background-color: #ffffff
+
+
+  .panel
+    border: 0
+
+    .panel-block
+      letter-spacing: 1.5px
+
+      &:not(:last-child)
+        border: 0
+
+      .panel-item
+        @include font-size(20px)
+        letter-spacing: 2.9px
+        text-align: center
+        color: $black
+
+  .dropdown-menu
+    position: relative
+    cursor: pointer
+
+    &:hover
+      .menu-list
+        display: inline-block
+
+      .nav-button
+        color: $price-red
+        border-bottom: 2px solid $price-red
+        padding-bottom: 5px
+
+    .nav-button
+      @include font-size(18px)
+      font-weight: 600
+      letter-spacing: 2.6px
+      line-height: 1em
+      @include is-mobile-view(false)
+        color: $white
+
+    .menu-list
+      width: 160px
+      z-index: $z-index-dropdown-menu
+      position: absolute
+      top: 40px
+      left: -20px
+      border: solid 1px #dcdcdc
+      border-radius: 4px
+      display: none
+      background-color: $white
+      @include is-mobile-view(true)
+        overflow: auto
+        max-height: 300px
+        top: 0px
+        left: 120px
+
+      &::before
+        height: 20px
+        width: 100%
+        content: ''
+        position: absolute
+        top: -20px
+        display: block
+
+      &.large-menu
+        width: 300px
+        @include is-mobile-view(true)
+          width: 200px
+
+      &.level-menu
+        width: 220px
+        @include is-mobile-view(true)
+          width: 200px
+
+      &.app-download-menu
+        left: -100px
+
+      .item-block
+        padding: 10px 20px
+
+        display: block
+        width: 100%
+        background-color: $white
+
+      .item-block + .item-block
+        border-top: solid 1px #dcdcdc
+
+      .item-title
+        @include font-size(17px)
+        color: $black
+        letter-spacing: 2.5px
+        text-align: left
+
+        &:hover
+          color: $button-blue
+
+      li a
+        display: inline-block
+        width: 220px
+        line-height: 35px
+        padding-left: 20px
+        text-decoration: none
+        color: #000000
+      ul
+        position: absolute
+        padding: 0px
+        left: 208px
+        width: 220px
+        margin-top: -45px
+        display: none
+
+      li
+        display: inline-block
+        position: relative
+        float: left
+        .sub
+          background: #e6e6e6
+          width: 220px
+          text-align: left
+        .sub:first-child
+          border-radius: 0px 8px 0px 0px
+        .sub:last-child
+          border-radius: 0px 0px 8px 0px
+
+        &:hover ul
+          ul
+            display: none
+          display: block
+        li:hover ul
+          margin-left: 220px
+          margin-top: 35px
+          display: block
+
+    .app-download-title
+      @include font-size(17px)
+      color: $black
+      letter-spacing: 2.5px
+      text-align: left
+      padding: 27px 30px 30px 27px
+
+    .app-download-button
+      padding-bottom: 22px
+
+      .store-button
+        svg
+          width: 120px
+
+        a
+          &:hover
+            background-color: inherit
+
+      .ios-button
+        float: left
+
+    .dropdown-button
+      border-radius: 5px
+      box-shadow: 0 0 5px $white
+      display: none
+      left: -20px
+      position: absolute
+      top: 100%
+      width: 200px
+      @include is-mobile-view(true)
+        top: 0px
+        left: 70px
+
+      &::before
+        border-bottom: 7px solid $white
+        border-left: 7px solid transparent
+        border-right: 7px solid transparent
+        content: ''
+        display: inline-block
+        left: 70px
+        position: absolute
+        top: -7px
+
+    .account
+      @include is-mobile-view(true)
+        top: 30px
+        left: -90px
+
+    .cart-dropdown-menu
+      border-radius: 5px
+      display: none
+      position: absolute
+      top: 100%
+      width: 420px
+      right: -50px
+      @include is-mobile-view(true)
+        right: -30px
+        width: 90vw
+        margin-right: 5vw
+
+      &::before
+        border-bottom: 7px solid $price-red
+        border-left: 7px solid transparent
+        border-right: 7px solid transparent
+        content: ''
+        display: inline-block
+        right: 140px
+        position: absolute
+        top: -6px
+        @include is-mobile-view(true)
+          right: 100px
+
+      .panel
+        box-shadow: 0 2px 6px 3px rgba(0, 0, 0, .32)
+        border-radius: 10px
+
+      .panel-header
+        border-top-left-radius: 10px
+        border-top-right-radius: 10px
+        background-color: $price-red
+        border: solid 1px #979797
+        padding-top: 10px
+
+      .is-open
+        display: block
+
+  .account-button-wrapper
+    background-color: $button-blue
+    border-radius: 5px
+    color: $white
+    margin: 5px
+
+    &:hover
+      background-color: $button-hover-blue
+
+    a
+      color: $white
+
+      &:hover
+        color: $white
+
+  .menu-item
+    @include font-size(20px)
+    letter-spacing: 1.5px
+    margin-left: 15px
+
+  .cart-price
+    @include is-mobile-view(false)
+      @include font-size(26px)
+    @include is-mobile-view(true)
+      @include font-size(14px)
+    font-weight: bold
+    vertical-align: super
+    padding-left: 15px
+
+  .badge
+    &::after
+      @include is-mobile-view(false)
+        @include font-size(16px)
+      @include is-mobile-view(true)
+        @include font-size(8px)
+      background: $badge-background
+      border-radius: 50%
+      color: $white
+      content: attr(data-count)
+      font-weight: $font-weight-title
+      letter-spacing: 2.1px
+      line-height: 1.5rem
+      position: absolute
+      right: -1rem
+      text-align: center
+      width: 1.5rem
+      z-index: 10
+
+  .menu-button
+    cursor: pointer
+
+  .cart-menu-button
+    @include is-mobile-view(false)
+      margin: 5px
+    @include is-mobile-view(true)
+      margin: 0
+    
+
+    &:hover
+      background-color: $button-hover-blue
+      border-radius: 5px
+      
+  .account-menu-button
+    color: $white
+    vertical-align: middle
+
+    i
+      position: relative
+      display: block
+      color: #white
+    a
+      &:visited
+        color: #white
+
+  .cart-menu-svg
+    @include is-mobile-view(false)
+      width: 40px
+      height: 40px
+    @include is-mobile-view(true)
+      width: 25px
+      height: 25px
+
+//Smart Banner
+.branch-banner-is-active
+  .header
+    top: 76px
+  #filter_sidebar
+    height: calc(100% - 126px)
+  #classificationSideBar
+    height: calc(100% - 126px)
+
+
+// cart
+.panel-header
+  background-color: $price-red
+
+  .panel-title
+    @include font-size(18px)
+    letter-spacing: 2.6px
+    text-align: center
+    color: $white
+
+  .panel-status-bar
+    width: 70%
+    margin: 2px auto 10px
+
+    // progress
+    //   color: $gama-blue
+    //
+    //   &::-webkit-progress-bar-value,
+    //   &::-webkit-progress-value,
+    //   &::-moz-progress-bar
+    //     background-color: $gama-blue
+    //     color: $gama-blue

@@ -1,0 +1,28 @@
+section.filter-section
+	.container.is-fluid.filter-group.no-padding
+		nav.level
+			.level-left
+				= link_to classification_path(id:@classification.id, page: params[:page], sort_id: 1, tag_ids: params[:tag_ids] ? params[:tag_ids]:"", area_ids: params[:area_ids] ? params[:area_ids] : ""), class: (["button", (params[:sort_id]=="1"? "is-danger":"is-white")])
+					| 依熱銷
+				= link_to classification_path(id:@classification.id, page: params[:page], sort_id: 2, tag_ids: params[:tag_ids] ? params[:tag_ids]:"", area_ids: params[:area_ids] ? params[:area_ids] : ""), class: (["button", (params[:sort_id]=="2"? "is-danger":"is-white")])
+					| 依最新
+				= link_to classification_path(id:@classification.id, page: params[:page], sort_id: ((params[:sort_id] == "3")? 4 : 3), tag_ids: params[:tag_ids] ? params[:tag_ids]:"", area_ids: params[:area_ids] ? params[:area_ids] : ""), class: (["button", (params[:sort_id]=="3" || params[:sort_id]=="4"? "is-danger":"is-white")])
+					span
+						| 價錢
+					span.icon.is-small
+						- if params[:sort_id] == "3"
+							i.fa.fa-sort-asc
+						- elsif params[:sort_id] == "4"
+							i.fa.fa-sort-desc
+						- else
+							i.fa.fa-sort
+			.level-right
+				.level-item
+					= params[:page].to_s + " / " + @meta['total_page'].to_s
+				= link_to classification_path(id:@classification.id, page: (params[:page].present? && params[:page].to_i-1>0? params[:page].to_i-1:@meta['total_page']), sort_id: params[:sort_id] ? params[:sort_id]:"", tag_ids: params[:tag_ids], area_ids: params[:area_ids]), class: (["button", "is-light"])
+					i.fa.fa-chevron-left
+				= link_to classification_path(id:@classification.id, page: (params[:page].present? && params[:page].to_i+1<=@meta['total_page']? params[:page].to_i+1:1), sort_id: params[:sort_id] ? params[:sort_id]:"", tag_ids: params[:tag_ids], area_ids: params[:area_ids]), class: (["button", "is-light"])
+					span
+						| 下一頁
+					span.icon.is-small
+						i.fa.fa-chevron-right

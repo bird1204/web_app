@@ -1,0 +1,41 @@
+section.section.order-section
+  .container
+    .order-detail
+      .detail-header-row
+        .detail-title
+          = @member_service.member_displayed
+        .order-total-amount
+          = @member_service.status
+      .detail-body
+        .order-summary
+          .row
+            .summary-title 
+              | 訂單編號
+            .summary-price.full-width
+              = @member_service.order_id
+          .row
+            .summary-title 
+              | 更新日期
+            .summary-price.full-width
+              = Time.zone.parse(@member_service.updated_at).strftime('%F')
+
+      .detail-header-row
+        .detail-title 
+          = @member_service.member_content_head
+      .detail-body
+        .order-summary
+          .row
+            = @member_service.member_content.try(:html_safe)
+
+      .detail-header-row
+        .detail-title
+          | 問答紀錄
+      .detail-body
+        .order-summary
+          - @member_service.replies.each do |reply|
+            .row
+              .summary-title
+                = reply['reply_message']
+              .summary-price.full-width
+                = Time.zone.parse(reply['created_at']).strftime('%F %T')
+                

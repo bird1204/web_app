@@ -1,0 +1,53 @@
+- content_for :javascript do
+  = javascript_include_tag "member_services_9", defer: 'defer'
+
+section.section.order-section
+  .container
+    = form_for @member_service do |f|
+      .order-detail
+        .detail-header-row
+          = render partial: 'member_services/new/title', :locals => {question_id: question_id, f: f}
+        .detail-body
+          .order-summary
+            = render partial: "member_services/new/order_default_info", locals: {f: f}
+            .row
+              .description
+                | 請於下表填入商品破損的數量，同時幫我們將商品破損處拍照後透過Email寄給我們，我們將盡快為您處理，謝謝！
+            = f.hidden_field :images_url
+            = f.fields_for :comment do |field|
+              
+              table.table
+                thead
+                  tr
+                    th
+                      .is-center
+                        | 商品名稱
+                    th
+                      .is-center
+                        | 商品數量
+                    th
+                      .is-center
+                        | 損壞數量
+                tbody
+                  =render partial: 'member_services/new/order_gamaitems', :locals => {gamaitems: @order.gamaitems, browser: @browser, field: field, question_id: question_id}
+                  
+    = s3_uploader_form  callback_url: member_services_images_path,
+                        callback_method: "POST",
+                        callback_param: "member_services[images_url]",
+                        key: "uploads/asset/member_services/item_borken/#{@order.ordernumber}/${filename}",
+                        max_file_size: 50.megabytes,
+                        id: "s3-uploader",
+                        class: "upload-form",
+                        data: {:key => :val} do
+      .order-detail style='margin-top: 25px;'
+        .detail-header-row
+          .detail-title
+            | 上傳圖片
+        .detail-body
+          .order-summary
+            = file_field_tag :file, multiple: true
+            = render partial: 'layouts/upload_progress'
+          .order-summary#gallery
+          .order-total-amount-row.row
+            div.submit#submit-btn
+              | 提交

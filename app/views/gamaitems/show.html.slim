@@ -1,0 +1,164 @@
+- content_for :tracking do
+  javascript:
+    dataLayer.push({
+      'ecommerce': {
+        'detail': {
+          'actionField': {},
+          'products': [{
+            'name': '#{@gamaitem.id}-#{@gamaitem.name}',
+            'id': '#{@gamaitem.id}',
+            'price': '#{@gamaitem.price}',
+           }]
+         }
+       }
+    });
+
+    fbq("track", "ViewContent", {
+      content_type: 'product',
+      content_ids: [#{@gamaitem.id}]
+    });
+
+
+- content_for :title do
+  = @gamaitem.name
+
+- if @gamaitem.present?
+  - content_for :meta_tag do
+    = render partial: "layouts/meta", :locals => {keywords: "#{@gamaitem.name},甘仔店,零食",
+    description: @gamaitem.description_txt,
+    image: normal_size(@gamaitem.product_image),
+    canonical: "https://www.gamadian.com/gamaitems/#{@gamaitem.id}",
+    android_link: "android-app://com.jumplife.gamadian/gamaitems/#{@gamaitem.id}",
+    ios_link: "ios-app://919357962/gamaitems/#{@gamaitem.id}"}
+
+script type='application/ld+json'
+  | {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "https://www.gamadian.com/",
+        "name": "甘仔店"
+      }
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "https://www.gamadian.com/classifications/#{@gamaitem.classification.id}",
+        "name": "#{@gamaitem.classification.name}"
+      }
+    },{
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@id": "https://www.gamadian.com/gamaitems/#{@gamaitem.id}",
+        "name": "#{@gamaitem.name}"
+      }
+    }]
+  | }
+
+div itemscope="" itemtype="http://schema.org/Product"
+  meta itemprop="url" content=gamaitem_path(id: @gamaitem.id)
+  .breadcrumbs-wrapper
+    .container
+      ol.breadcrumbs
+        li.breadcrumb-item
+          = link_to root_path
+            | 甘仔店
+
+        - unless @gamaitem.classification.nil?
+          - @gamaitem.classification.self_and_ancestors.each do |classification|
+            li.breadcrumb-item
+              = link_to classification_path(id: classification.id)
+                = classification.name   
+        - unless @gamaitem.nil?
+          li.breadcrumb-item
+            = link_to gamaitem_path(id: @gamaitem.id)
+              = @gamaitem.name
+
+
+  .item-wrapper
+    .columns.is-mobile
+      .column.is-7
+        .content
+          = image @gamaitem.product_image, @gamaitem.name, [:normal, :normal], 'item-image', itemprop: 'image'
+
+        .content.item-card
+          .item-card-header
+            span
+              | 商品說明
+          .item-card-content itemprop="description"
+            = @gamaitem.description.html_safe
+
+        .content.item-card
+          .item-card-header
+            span
+              | 商品規格
+          .item-card-content.item-specification
+            = @gamaitem.specification.html_safe
+
+      .column.is-5
+        .content.item-card
+          .item-card-header
+            .country-icon
+              | <img src="
+              = @gamaitem.area_poster_url
+              | ">
+            h1.item-title itemprop="name"
+              = @gamaitem.name
+            div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"
+              meta content="TWD" itemprop="priceCurrency"
+              span.item-price
+                | $
+              span.item-price itemprop="price"
+                = @gamaitem.price
+              span.item-original-price
+                | $
+                = @gamaitem.original_price
+          .item-card-content
+            span.feature-title
+              | 為什麼值得入手
+            ol.feature-list
+              - @gamaitem.features.each do |feature|
+                li
+                  h3.feature-content 
+                    = feature
+
+        .content.item-card
+          .premise-message
+              = image_tag("icon/finger.png", :class => "icon-image")
+              span.premise-title
+                | 品質保證
+              = image_tag("icon/nice.png", :class => "icon-image")
+              span.premise-title
+                | 正品保證
+              = image_tag("icon/service.png", :class => "icon-image")
+              span.premise-title
+                | 服務保證
+
+        = social_share_button_tag @gamaitem.name, url: "https://www.gamadian.com/gamaitems/" + @gamaitem.id, image: @gamaitem.product_image, desc: @gamaitem.description_txt.remove("<br>"), via: "甘仔店", style: "text-align: center"
+
+        - if @gamaitem.is_buy
+          = link_to carts_put_path(id: @gamaitem.id), method: :post, remote: true
+            .add-to-cart-button
+              p.add-to-cart-title
+                | 加入購物車
+        - else
+          .not-buyable-button
+            p.not-buyable-title
+              | 商品補貨中
+
+  section.hero
+    .hero-body
+      .container
+        h4.title.section-title
+          | 相關推薦
+
+  section.section.item-wrapper
+    .container
+      .columns.is-multiline.is-mobile 
+        - @gamaitem.related_gamaitems.each do |item|
+          .column.is-one-mobile.is-one-half-tablet.is-one-third-desktop itemprop="isSimilarTo" itemscope="" itemtype="http://schema.org/Product"
+            = render partial: "layouts/item", :locals => {item: item}

@@ -1,0 +1,41 @@
+.container
+  .menu-bar
+    .dropdown-menu.classification-menu
+      - if page_type == "classification"
+        .menu-title.classification-title#classification-button
+          = @classification.name
+        .menu-item#classification-menu
+          .item-block.country-menu-title
+            .item-title.country-item
+              | 國家
+            .country-menu
+              - @countries.each_with_index do |topic, index|
+                = link_to classification_path(id: topic.id, sort_id: params[:sort_id]), class: "item-block"
+                  .item-title class=("active" if topic.id == params[:id].to_i)
+                    = topic.name
+          - @classifications.each_with_index do |topic, index|
+            = link_to classification_path(id: topic.id, sort_id: params[:sort_id]), class: "item-block"
+              .item-title class=("active" if topic.id == params[:id].to_i)
+                = topic.name
+
+      - else
+        .menu-title.classification-title#classification-button
+          = @meta['name']
+        .menu-item.topic-menu-item#classification-menu
+          - @topic_menu.each_with_index do |topic, index|
+            = link_to topic_path(id: topic.id), class: "item-block"
+              .item-title class=("active" if topic.id == params[:id].to_i)
+                = topic.name
+
+    - if page_type == "classification"
+      / sort menu only for classifications page
+      .dropdown-menu.sort-menu
+        - sort_name = ["請選擇排序", "熱銷程度優先", "最新上架優先", "價格由低到高", "價格由高到低"]
+
+        .menu-title#sort-button
+          = sort_name[params[:sort_id].to_i]
+        .menu-item#sort-menu
+          - (1 .. 4).each do |index|
+            = link_to classification_path(id: params[:id], sort_id: index), class: "item-block"
+              .item-title class=("active" if params[:sort_id].to_i == index)
+                = sort_name[index]

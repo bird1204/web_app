@@ -1,0 +1,9 @@
+- if local_assigns[:url].present?
+  a[href=url]
+    .item
+      = image_tag "", :class => "image-container lazyOwl",alt: url, :data => {src: pic_url}
+
+- if local_assigns[:message].present?
+  .item
+    = image_tag "", :class => "image-container lazyOwl", alt: '柑仔店｜日本零食', :data => {src: pic_url}, :onClick => "alert('#{message.gsub(/\r\n/, '\r\n')}');"
+

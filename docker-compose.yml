@@ -1,0 +1,25 @@
+version: '2'
+services:
+  app:
+    build: .
+    command: bin/rails s --binding='0.0.0.0'
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    tty: true
+    stdin_open: true
+    environment:
+      RAILS_ENV: development
+      SECRET_KEY_BASE: fake
+
+#      MYSQL_HOST: mysql
+#      MYSQL_PASSWORD:
+#
+#  mysql:
+#    image: mysql
+#    command: '--sql_mode=NO_ENGINE_SUBSTITUTION'
+#    environment:
+#      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+#    ports:
+#      - "3307:3306"

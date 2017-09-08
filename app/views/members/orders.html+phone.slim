@@ -1,0 +1,23 @@
+.container
+  .member-area
+    table.is-mobile
+      tr
+        td
+          = link_to '我的訂單', members_orders_path, class: "member-nav-item-is-mobile active"
+        td
+          = link_to '我的優惠券', members_coupons_path, class: "member-nav-item-is-mobile"   
+    br
+    .content-container.is-mobile
+      .mobile-head 進行中的訂單
+      .mobile-hr
+      - @orders.each do |order|
+        = link_to order_id_path(id: order.ordernumber)
+          - if order.situation_of_cargo_id != 4
+            = render partial: "layouts/order_row", :locals => {order: order}
+      .blank-div
+      .mobile-head 已完成的訂單
+      .mobile-hr
+      - @orders.each do |order|
+        = link_to order_id_path(id: order.ordernumber)
+          - if order.situation_of_cargo_id == 4
+            = render partial: "layouts/order_row", :locals => {order: order}

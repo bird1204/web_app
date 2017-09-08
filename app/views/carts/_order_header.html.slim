@@ -1,0 +1,21 @@
+.order-header
+  .container
+    .order-title
+      | 結帳
+
+    ol.order-progress
+      li class=('active' if step.to_i == 1)
+        span.step
+          span 1
+        span.name
+          | 付款資訊
+      li class=('active' if step.to_i == 2)
+        span.step
+          span 2
+        span.name
+          | 運送資訊
+      li class=('active' if step.to_i == 3)
+        span.step
+          span 3
+        span.name
+          | 訂購確認

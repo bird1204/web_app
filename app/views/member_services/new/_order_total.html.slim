@@ -1,0 +1,20 @@
+.row
+  .summary-title
+    = f.label :total_refund, '退款總計'
+  .summary-price.full-width
+    = f.text_field :total_refund, value:'', readonly: true
+.row
+  .summary-title
+    = f.label :shipping_refund, '運費退款'
+  .summary-price.full-width
+    = f.text_field :shipping_refund, value:'', readonly: true
+.row
+  .summary-title
+    = f.label :discount, '折扣金額'
+  .summary-price.full-width
+    = f.text_field :discount, value:'', readonly: true
+.row
+  .summary-title
+    = f.label :total_amount_refund, '總退款金額'
+  .summary-price.full-width
+    = f.text_field :total_amount_refund, value:'', readonly: true

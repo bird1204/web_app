@@ -1,0 +1,71 @@
+header
+  .header
+    = image_tag 'mini_web_banner.jpg', srcset: "#{asset_path('small_web_banner.jpg')} 2x", style: 'width:100%;display:none;', id: 'low-fee-banner', alt: '柑仔店'
+    nav.nav
+      .container
+
+        span.nav-toggle#nav-toggle
+          span
+          span
+          span
+
+        .nav-center
+          = link_to root_path, {class: 'is-brand'}
+            = image_tag("logo.png", class: 'is-mobile', alt: '柑仔店')
+
+        .nav-item
+          - if signed_in?
+            .dropdown-menu
+              i.fa.fa-user-circle.fa-lg#account-btn.account-menu-button
+                span
+                  .box.account.account-dropdown-menu.dropdown-button.menu-list
+                    .panel
+                      = link_to members_orders_path, :class  => 'panel-block'
+                        p.panel-item
+                          | 我的訂單
+                      = link_to members_coupons_path, :class  => 'panel-block'
+                        p.panel-item
+                          | 我的優惠券
+                      = link_to edit_members_path, :class  => 'panel-block'
+                        p.panel-item
+                          | 我的帳戶
+                      = link_to member_services_path, :class  => 'panel-block'
+                        p.panel-item
+                          | 客服問答紀錄
+                      = link_to members_signout_path, :class  => 'panel-block'
+                        p.panel-item
+                          | 登出
+          - else
+              = link_to members_signin_path, :class  => 'account-menu-button'
+                i.fa.fa-user-circle.fa-lg#account-btn.account-menu-button
+
+        .nav-item
+          i.fa.fa-search.fa-lg#search-btn
+
+
+        .nav-right
+          .dropdown-menu
+            span
+              .cart-dropdown-menu
+                .panel
+                  - progress_bar = (@cart.total_amount / @cart.free_ship_threshold * 100.0).round()
+                  .panel-header
+                    p.panel-title
+                      - if @cart.total_amount >= @cart.free_ship_threshold
+                        | 此筆訂單可享免運費！
+                      - else
+                        | 還差＄
+                        = (@cart.free_ship_threshold - @cart.total_amount).to_i
+                        | 元可享免運！
+                      a.cart-close 繼續選購
+                    .panel-status-bar
+                      progress.progress.is-info value="#{progress_bar}" max="100"
+                        = progress_bar
+                  = render partial: "carts/cart"
+            #cart-button.menu-button.cart-menu-button.nav-item
+              i
+                .badge data-count=@cart.total_item_quantity
+                = render partial: "svg/cart"
+              span.cart-price
+                | $
+                = @cart.total_amount - @cart.coupon_value

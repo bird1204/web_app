@@ -1,0 +1,48 @@
+.container
+  .member-area
+    table.is-mobile
+      tr
+        td
+          = link_to '我的訂單', members_orders_path, class: "member-nav-item-is-mobile"
+        td
+          = link_to '我的優惠券', members_coupons_path, class: "member-nav-item-is-mobile active"   
+    br   
+    .content-container.coupon-container.is-mobile
+      .coupon-header
+        .row
+          .coupon-item.coupon-code.is-mobile
+            | 優惠碼
+          .coupon-item.coupon-content.is-mobile
+            | 內容
+          .coupon-item.coupon-countdown.is-mobile
+            | 倒數
+
+      - @coupons.each do |coupon|
+        .coupon-row
+          .row
+            .coupon-item
+              = render partial: "svg/ticket"
+            .coupon-item.coupon-code.is-mobile
+              = coupon.code
+            .coupon-item.coupon-content.is-mobile
+              .discount-wording
+                - if coupon.type == "1"
+                  = "打#{(coupon.discount.to_f * 100.0).to_i.to_s.remove('0')}折"
+                - elsif coupon.type == "2"
+                  = "折抵#{coupon.discount}元"
+            .coupon-item.coupon-countdown.is-mobile
+              = "#{(coupon.endDate.to_date - DateTime.now).to_i}天"
+
+      .notice-wording
+        .notice-title
+          | 優惠券使用注意事項
+        .notice-desciption
+          ol
+            li
+              | 使用優惠券後,若未達649免運門檻,需負擔 90元運費。
+            li
+              | 使用本卷後,退訂將不再補發優惠碼,且使用優惠碼的訂單,不接受單品退貨。
+            li
+              | 已經使用的優惠碼將自動刪除。
+            li
+              | 超過使用期限的優惠碼將自動刪除。

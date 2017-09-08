@@ -1,0 +1,538 @@
+@import import
+
+.order-header
+  background-color: $price-red
+  width: 100%
+  display: inline-block
+  position: relative
+  text-align: center
+
+  .order-title
+    @include font-size(48px)
+    color: $white
+    margin-left: 60px
+    margin-top: 30px
+    float: left
+    position: absolute
+    @include is-mobile-view(true)
+      margin-left: 0px
+      float: initial
+      position: relative
+
+
+.order-progress
+  list-style: none
+  list-style-image: none
+  margin: 30px auto 0
+  padding: 0
+  display: inline-block
+  @include is-mobile-view(true)
+    width: 100%
+
+  li
+    float: left
+    text-align: center
+    position: relative
+    width: 160px
+    z-index: 0
+    @include is-mobile-view(true)
+      width: 33%
+
+    &:first-of-type
+      .step
+        &::before
+          display: none
+
+    &:last-of-type
+      .step
+        &::after
+          display: none
+
+  .name
+    @include font-size(20px)
+    display: block
+    vertical-align: bottom
+    text-align: center
+    color: $white
+    margin: 10px 0 16px
+
+  .step
+    @include font-size(20px)
+    color: $price-red
+    border: 3px solid $progress-bar-red
+    background-color: $progress-bar-red
+    border-radius: 50%
+    line-height: 2
+    width: 2.25em
+    height: 2.25em
+    display: inline-block
+    font-weight: $font-weight-title
+    letter-spacing: 2px
+
+    &::before
+      content: ''
+      display: block
+      background-color: $progress-bar-red
+      height: 10px
+      width: 45%
+      position: absolute
+      top: 1em
+      left: 0
+      z-index: -1
+
+    &::after
+      content: ''
+      display: block
+      background-color: $progress-bar-red
+      height: 10px
+      width: 45%
+      position: absolute
+      top: 1em
+      right: 0
+      z-index: -1
+
+  .active
+    .step
+      color: $price-red
+      background-color: $white
+      border: 3px solid $white
+
+.checkout-section
+  background-color: $background-gray
+
+  input
+    &[type='radio']
+      +appearance(none)
+      width: 18px
+      height: 18px
+      vertical-align: middle
+      border: 1px solid $border-gray
+      border-radius: 50%
+      outline: none
+      box-shadow: 0 0 5px 0 $white inset
+      margin-right: 25px
+
+      &::before
+        content: ''
+        display: block
+        width: 60%
+        height: 60%
+        margin: 20% auto
+        border-radius: 50%
+
+      &:checked
+        &::before
+          background: $price-red
+
+
+    &[type='text'],
+    &[type='tel'],
+    &[type='email'],
+    &[type='password']
+      width: 100%
+      height: 60px
+      border-radius: 4px
+      background-color: $white
+      border: solid 1px $input-border
+      padding: 20px 30px
+
+      &.input-with-button
+        width: 75%
+
+      &.paddingless-input
+        padding: 0
+        border: 0
+
+  select
+    +appearance(none)
+    width: 100%
+    height: 60px
+    border-radius: 4px
+    background-color: $white
+    border: solid 1px $input-border
+    padding: 20px 30px
+
+    &.input-with-button
+      width: 75%
+
+
+  a.manual-coupon-converter
+    width: 100%
+    padding: 0px 30px
+    color: $button-blue
+    text-decoration: underline
+    &:hover
+      color: #42afe3
+
+  .radio-box
+    width: 100%
+    height: 60px
+    border-radius: 4px
+    background-color: $white
+    border: solid 1px $input-border
+    padding: 20px 30px
+    position: relative
+    @include is-mobile-view(true)
+      padding: 20px 1%
+
+    &:hover
+      background-color: $button-hover-white
+
+    .radio-title
+      @include font-size(16px)
+      line-height: 1.5
+      color: $input-text
+
+
+    .input-right-text
+      @include font-size(16px)
+      float: right
+      margin-right: 45px
+      line-height: 1.5
+
+
+    .text-underline
+      text-decoration: underline
+
+.form-section
+  padding-bottom: 35px
+  margin: 0 auto
+  width: 100%
+  max-width: 770px
+
+  .input-field
+    &:hover
+      background-color: $button-hover-white
+
+  .title
+    @include font-size(24px)
+    font-weight: $font-weight-title
+    line-height: 1.1
+    color: $form-title
+
+  .order-information-wording
+    @include font-size(16px)
+    padding: 20px 30px
+    color: $price-red
+    line-height: 1.5
+    letter-spacing: 1px
+
+
+  .gama-button
+    @include remove-button-style
+    @include font-size(16px)
+    border-radius: 4px
+    background-color: $gama-blue
+    letter-spacing: 1.5px
+    text-align: center
+    color: $white
+    padding: 18px
+    float: right
+    width: 20%
+
+    &:hover
+      background-color: $button-hover-blue
+
+  .action-button
+    @include remove-button-style
+    @include font-size(20px)
+    border-radius: 6px
+    background-color: $price-red
+    letter-spacing: 2.9px
+    text-align: center
+    color: $white
+    padding: 15px
+    float: right
+    @include is-mobile-view(true)
+      -webkit-appearance: none
+
+    &:hover
+      background-color: $button-hover-red
+
+  .back-button
+    @include remove-button-style
+    @include font-size(20px)
+    border-radius: 6px
+    border: solid 1px #979797
+    letter-spacing: 2.9px
+    text-align: center
+    color: #979797
+    padding: 15px
+    float: left
+
+.input-padding
+  padding: 10px 0
+
+.input-row
+  position: relative
+  width: 100%
+  display: inline-block
+
+  .input-city
+    width: 50%
+    float: left
+
+.convenience-store-popup
+  margin: 100px auto 0
+  width: 95%
+  max-width: 960px
+  text-align: center
+
+  .title
+    @include font-size(48px)
+    text-align: center
+    color: $white
+
+  select
+    +appearance(none)
+    width: 20%
+    height: 60px
+    border-radius: 4px
+    background-color: $white
+    border: solid 1px $input-border
+    color: $input-text
+    @include is-mobile-view(true)
+      padding: 5px
+    @include is-mobile-view(false)
+      padding: 20px 30px
+
+
+    &::after
+      content: '\25BE'
+      position: absolute
+      right: 8px
+      top: 50%
+      height: 16px
+      width: 16px
+      margin-top: -8px
+
+    &:not(:last-child)
+      margin-right: 18px
+
+
+  .stores-title
+    @include font-size(18px)
+    font-weight: $font-weight-title
+    color: $white
+    padding: 40px 0 10px
+
+
+  .radio-button
+    input
+      &[type='radio']
+        display: none
+
+      &:checked + label
+        opacity: .9
+        background-color: $gama-blue
+        color: $white
+
+    label
+      @include font-size(16px)
+      display: inline-block
+      background-color: $white
+      padding: 15px 40px
+      margin-bottom: 25px
+
+      &:not(:last-child)
+        margin-right: 25px
+
+.map-container
+  width: 100%
+  height: 350px
+  border-radius: 14px
+  border: solid 1px $white
+  background-color: $white
+  margin-top: 20px
+  z-index: 11
+  overflow: hidden
+  position: relative
+
+.map-view
+  width: 100%
+  height: 350px
+  margin-bottom: 1px
+  margin: 0
+  padding: 0
+  position: absolute
+  border-radius: 14px
+  top: 0
+  left: 0
+  z-index: 10
+
+.map-store-title
+  @include font-size(24px)
+  font-weight: $font-weight-title
+  text-align: center
+  color: $text-black
+
+.map-store-address
+  @include font-size(14px)
+  letter-spacing: 2.1px
+  text-align: center
+  color: #9b9b9b
+  margin-bottom: 14px
+
+.map-select-store-button
+  @include font-size(18px)
+  letter-spacing: 2.6px
+  text-align: center
+  color: $white
+  padding: 5px 18px
+  border-radius: 6px
+  background-color: $price-red
+  cursor: pointer
+
+
+.mfp-close-btn-in
+  .mfp-close
+    @include font-size(48px)
+    color: $white
+
+.order-section
+  background-color: $background-gray
+
+.order-detail
+  width: 100%
+  max-width: 770px
+  margin: 0 auto
+  background-color: $white
+  border-radius: 4px
+  border: solid 1px $border-gray
+  display: block
+
+  .detail-header-row
+    +clearfix
+    background-color: #eceeef
+    width: 100%
+    cursor: pointer
+
+    .detail-title
+      @include font-size(24px)
+      font-weight: $font-weight-title
+      line-height: 1.1
+      color: $form-title
+      padding: 14px 35px
+      float: left
+
+    .order-total-amount
+      @include font-size(30px)
+      font-weight: $font-weight-title
+      color: $price-red
+      float: right
+      padding: 10px 35px
+
+  .row
+    display: inline-block
+    width: 100%
+
+  .detail-border
+    margin: 0
+    border-top: solid 1px $border-gray
+
+  .order-item-image
+    width: 140px
+    padding: 18px 12px
+    float: left
+
+  .item-info
+    padding: 58px 0
+
+  .item-title
+    @include font-size(18px)
+    color: #9b9b9b
+    padding: 0 15px
+    float: left
+
+  .item-quantity
+    @include font-size(20px)
+    font-weight: $font-weight-title
+    letter-spacing: 2.9px
+    color: $text-black
+    float: right
+    padding-right: 5%
+
+  .item-price
+    @include font-size(20px)
+    color: $text-black
+    float: right
+    padding: 0 38px
+    width: 120px
+
+  .order-total-amount-row
+    padding: 25px 35px 15px 28px
+
+    .total-amount-title
+      @include font-size(24px)
+      line-height: 1
+      color: #4a4a4a
+      float: left
+
+    .total-amount-price
+      @include font-size(30px)
+      font-weight: $font-weight-title
+      color: $price-red
+      float: right
+
+    .link-to-questions
+      @include remove-button-style
+      width: 90%
+      margin: 0 5%
+      border-radius: 6px
+      background-color: $button-blue
+      padding: 15px
+      text-align: center
+      @include is-mobile-view(true)
+        -webkit-appearance: none
+
+      &:hover
+        background-color: $button-hover-blue 
+        
+      a
+        @include font-size(20px)
+        color: $white
+        letter-spacing: 2.9px
+
+
+  .order-summary
+    border-top: solid 1px $border-gray
+    border-bottom: solid 1px $border-gray
+    padding: 16px 37px 16px 28px
+
+    .summary-title
+      @include font-size(16px)
+      font-weight: $font-weight-title
+      line-height: 1.5
+      color: $text-black
+      float: left
+      margin-bottom: 15px
+
+    .summary-price
+      @include font-size(20px)
+      color: $text-black
+      float: right
+
+    .coupon-code
+      @include font-size(18px)
+      color: #9b9b9b
+      margin-left: 100px
+      float: left
+
+  .order-query-delivery-row
+    padding: 25px 35px 15px 28px
+
+    .link-to-questions
+      @include remove-button-style
+      width: 90%
+      margin: 0 5%
+      border-radius: 6px
+      background-color: $button-blue
+      padding: 15px
+      text-align: center
+      color: $white
+      @include is-mobile-view(true)
+        -webkit-appearance: none
+
+      &:hover
+        background-color: $button-hover-blue
+

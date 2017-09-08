@@ -1,0 +1,33 @@
+doctype html
+html
+  head
+    meta http-equiv="Content-Type" content="text/html; charset=utf-8"
+    meta http-equiv="X-UA-Compatible" content="IE=edge"
+    meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0"
+    title 甘仔店大轉盤
+    = csrf_meta_tags
+    css:
+      body{background-image: url(#{asset_path('lottery/gifts/body_bg.png')})}
+      .turnplate{background-image: url("#{asset_path('lottery/cj_bg.png')}")}
+    = stylesheet_link_tag 'lotteries', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'jquery'
+    = javascript_include_tag 'lib/awardRotate.min'
+    = javascript_include_tag 'lotteries'
+    = javascript_tag 'turnplate.restaraunts = ["39元折價券", "69元折價券", "39元折價券", "69元折價券", "299元折價券", "149元折價券", "199元折價券 ", "99元折價券"];'
+    = javascript_tag 'turnplate.iconPosition = [[39, "diy2-img"], [199, "diy3-img"], [299, "diy4-img"]];'
+  body
+    = form_tag '', method: '', action: '', id: 'sentToBack'
+      h2#phone_num_label
+        font color='white' 手機號碼：(輸入完按下GO立即抽獎)
+      = phone_field_tag :phone_num, nil, pattern: '[0-9*]', novalidate: 'novalidate'
+      = hidden_field_tag :type, 'lottories'
+    
+    = image_tag 'lottery/gifts/1.png', id: 'diy1-img', style: 'display:none'
+    = image_tag 'lottery/gifts/2.png', id: 'diy2-img', style: 'display:none'
+    = image_tag 'lottery/gifts/3.png', id: 'diy3-img', style: 'display:none'
+    = image_tag 'lottery/gifts/4.png', id: 'diy4-img', style: 'display:none'
+    
+    .banner style="margin-top:35%"
+      .turnplate
+        canvas.item id="wheelcanvas" width="422px" height='422px'
+        =image_tag 'lottery/gifts/jt2.png', class: 'pointer'

@@ -1,0 +1,120 @@
+section.section.order-section
+  .container
+    .order-detail
+      .detail-header-row#order-detail-header
+        .detail-title
+          | 訂單編號
+
+        .order-total-amount
+          = @order.ordernumber
+
+      .detail-body
+        .order-summary
+          = render partial: "layouts/order_detail_status"
+          
+        .order-summary  
+          .row
+            .summary-title
+              | 訂購日期
+            .summary-price
+              = @order.created_at.to_date.to_s("%F")
+          .row
+            .summary-title
+              | 運送方式
+            .summary-price
+              - if @order.deliverymethod == 1
+                | 超商取貨付款
+              - elsif @order.deliverymethod == 2
+                | 貨到付款
+              - elsif @order.deliverymethod == 3
+                | 信用卡貨到付款
+          .row
+            .summary-title
+              | 收件人
+            .summary-price
+              = @order.name
+
+          .row
+            .summary-title
+              | 寄送地址
+            .summary-price
+              = @order.address
+
+        .order-summary
+          .row
+            .summary-title
+              | 發票形式
+            .summary-price
+              - case @order.invoice['type']
+                - when "0"
+                  | 電子發票
+                - when "1"
+                  | 捐贈發票
+                - when "2"
+                  | 紙本發票
+                - when "3"
+                  | 三聯式發票
+          .row
+            .summary-title
+              | 統一編號
+            .summary-price
+              = @order.invoice['buyer_ubn']
+    
+          .row
+            .summary-title
+              | 發票地址
+            .summary-price
+              = @order.invoice['address']
+
+          - if @order.invoice['type'] == "0"
+            .row
+              .summary-title
+                | 載具代號
+              .summary-price
+                = @order.invoice['carrier_num']
+
+        - @order.gamaitems.each do |item|
+          .row
+            a href="#{gamaitem_path(id: item['gamaid'])}"
+              = image item['product_image'], item['gamaitname'], [:preload, :thumb], 'order-item-image'
+              .item-info
+                .item-title
+                  = item['gamaitname']
+                .item-price
+                  | $
+                  = item['gamaitcount'] * item['price']
+                .item-quantity
+                  = item['gamaitcount']
+        .order-summary
+          .row
+            .summary-title
+              | 小計
+            .summary-price
+              | $
+              = @order.subtotal
+          .row
+            .summary-title
+              | 運費
+            .summary-price
+              | $
+              - if @order.shipping.to_i > 0
+                = @order.shipping
+              - else
+                | 0
+          .row
+            .summary-title
+              | 優惠碼
+            .coupon-code
+              = @order.coupon_code
+            .summary-price
+              = "$#{@order.totalprice.to_i - @order.subtotal.to_i - @order.shipping.to_i}"
+
+        .order-total-amount-row.row
+          .total-amount-title
+            | 結帳金額
+          .total-amount-price
+            | $
+            = @order.totalprice
+        .order-total-amount-row.row
+          .link-to-questions
+            = link_to '查詢訂單問題', questions_path

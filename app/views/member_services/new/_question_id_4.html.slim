@@ -1,0 +1,24 @@
+section.section.order-section
+  .container
+    = form_for @member_service do |f|
+      .order-detail
+        .detail-header-row
+          = render partial: 'member_services/new/title', :locals => {question_id: question_id, f: f}
+        .detail-body
+          .order-summary
+            = render partial: "member_services/new/order_default_info", locals: {f: f}
+            = f.fields_for :comment do |field|
+              .row
+                .summary-title
+                  = f.label :reason, '退訂原因'
+                .summary-price.full-width
+                  = field.text_area :reason,  placeholder: '請輸入退訂原因', required: true
+          .order-summary
+            .row
+              .description
+                | 送出退訂申請後，因時間差的關係，物流可能還是會配送，請跟物流人員說你已經退貨了，不要收貨，不要收款，就可以囉
+            .row
+              .description
+                | 若是使用信用卡付款，我們將會進行刷退，請放心！
+          .order-total-amount-row.row
+            = f.submit '提交', class: 'submit'

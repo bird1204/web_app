@@ -1,0 +1,22 @@
+.tabs.is-fullwidth.sort-section.is-mobile
+	ul
+		li
+			= link_to classification_path(id:@classification.id, page: params[:page], sort_id: 1, tag_ids: params[:tag_ids] ? params[:tag_ids]:"", area_ids: params[:area_ids] ? params[:area_ids] : ""), class: (params[:sort_id]=="1"? "is-active":"")
+				| 熱銷
+		li
+			= link_to classification_path(id:@classification.id, page: params[:page], sort_id: 2, tag_ids: params[:tag_ids] ? params[:tag_ids]:"", area_ids: params[:area_ids] ? params[:area_ids] : ""), class: (params[:sort_id]=="2"? "is-active":"")
+				| 最新
+		li		
+			= link_to classification_path(id:@classification.id, page: params[:page], sort_id: ((params[:sort_id] == "3")? 4 : 3), tag_ids: params[:tag_ids] ? params[:tag_ids]:"", area_ids: params[:area_ids] ? params[:area_ids] : ""), class: (params[:sort_id]=="3" || params[:sort_id]=="4"? "is-active":"")
+				span
+					| 價錢
+				span.icon.is-small
+					- if params[:sort_id] == "3"
+						i.fa.fa-sort-asc
+					- elsif params[:sort_id] == "4"
+						i.fa.fa-sort-desc
+					- else
+						i.fa.fa-sort
+		li
+			a class=(@filter_count>0? "is-active":"") onclick="w3_open()"
+				| 篩選

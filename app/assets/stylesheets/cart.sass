@@ -1,0 +1,146 @@
+@import import
+
+.cart-container
+  overflow: auto
+  max-height: 400px
+  background-color: $white
+  @include is-mobile-view(true)
+    max-height: 60vw
+
+.cart-item
+  background-color: $white
+  padding: 10px
+  position: relative
+  @include is-mobile-view(true)
+    width: 90vw
+
+  .cart-item-image
+    width: 142px
+    max-width: 142px
+    max-height: 80px
+
+  .cart-item-title
+    @include font-size(14px)
+    letter-spacing: 2.1px
+    color: #4a4a4a
+
+  .item-delete
+    @include font-size(14px)
+    display: inline-block
+    margin-top: 7px
+
+    &:hover
+      .delete-button
+        fill: $button-hover-red
+
+  .cart-item-price
+    @include font-size(18px)
+    font-weight: $font-weight-title
+    letter-spacing: 2.6px
+    color: $title-black
+    float: left
+
+  .cart-item-control
+    position: absolute
+    bottom: 8px
+    vertical-align: top
+    width: 230px
+    @include is-mobile-view(true)
+      width: 50%
+
+    .cart-item-quantity-wrapper
+      float: right
+      display: flex
+      align-items: center
+
+    .cart-minus-button
+      &:hover
+        .button-border
+          stroke: $button-hover-red
+
+    .cart-plus-button
+      &:hover
+        .button-border
+          fill: $button-hover-red
+
+
+    .cart-item-quantity
+      @include font-size(15px)
+      text-align: center
+      color: $price-red
+      font-weight: $font-weight-title
+      display: inline-block
+      width: 50px
+      height: 25px
+
+    .quantity-button
+      border: solid 1px $price-red
+      border-radius: 20px
+      color: $price-red
+      background-color: $white
+      width: 25px
+      height: 25px
+      display: inline-block
+
+      span
+        padding: 8px
+
+      &.plus-button
+        color: $white
+        background-color: $price-red
+
+.cart-footer
+  border-bottom-left-radius: 10px
+  border-bottom-right-radius: 10px
+  background-color: $white
+  padding-top: 10px
+
+  .cart-footer-hr
+    border-top: solid 1px #4a4a4a
+
+.footer-row
+  padding: 15px 0
+  margin: 0 auto
+  width: 260px
+
+  &.checkout-button-row
+    margin: 20px auto
+    a.is-mobile
+      @include is-mobile-view(true)
+        width: 90%
+        max-width: 225px
+        float: left
+
+
+  .cart-totel-item-quantity
+    @include font-size(14px)
+    letter-spacing: 2.1px
+    color: #4a4a4a
+    float: left
+
+    span
+      @include font-size(20px)
+      font-weight: $font-weight-title
+      letter-spacing: 2.9px
+
+  .cart-total-amount
+    @include font-size(24px)
+    font-weight: $font-weight-title
+    letter-spacing: 1.6px
+    color: $price-red
+    float: right
+
+.checkout-button
+  @include font-size(24px)
+  background-color: $price-red
+  font-weight: $font-weight-title
+  letter-spacing: 3.5px
+  color: $white
+  padding: 10px 80px
+  border-radius: 6px
+  @include is-mobile-view(true)
+    width: 100%  
+    padding: 10px 20%
+
+  &:hover
+    background-color: $button-hover-red

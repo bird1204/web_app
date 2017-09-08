@@ -1,0 +1,81 @@
+.columns.is-mobile
+  - if @order.situation_of_cargo_id == 1
+    .column.is-center.is-status
+      | 收到訂單
+  - else
+    .column.is-center.not-status
+      | 收到訂單
+  
+  - if @order.situation_of_cargo_id == 2
+    .column.is-center.is-status
+      | 處理中
+  - else
+    .column.is-center.not-status
+      | 處理中
+
+  - if @order.situation_of_cargo_id == 3
+    .column.is-center.is-status
+      | 已出貨
+  - else
+    .column.is-center.not-status
+      | 已出貨
+
+  - if @order.situation_of_cargo_id == 4
+    .column.is-center.is-status
+      | 已送達
+  - else
+    .column.is-center.not-status
+      | 已送達
+.row.message
+  - case @order.situation_of_cargo_id
+    - when 1
+      .message-header
+        | 甘仔店已收到訂單
+      .message-body
+        | 感謝您的購買，甘仔店會盡快處理您的訂單。
+    - when 2
+      .message-header
+        | 甘仔店正在為您處理中。
+      .message-body
+        | 甘仔店正準備將您的訂單轉由物流中心處理。
+    - when 3
+      .message-header
+        | 物流中心配送中。
+      .message-body
+        | 商品已由配送廠商配送中，會員可留意是否收到「出貨通知」。
+    - when 4
+      .message-header
+        | 您的商品已送達嘍！
+      .message-body
+        | 感謝您的購買，請再常來逛逛。若商品有任何問題，也歡迎聯繫我們，我們會儘快為您處理。
+.is-center
+  - if @order.delivery_no != nil
+    - if @order.deliverymethod != 1
+        .columns
+          .column.is-center
+            | 你的包裹號碼為: 
+            b
+              strong
+                = @order.delivery_no
+        .columns.is-mobile
+          .column.is-6.is-offset-3.button
+            = link_to '查詢配送狀態', 'http://www.t-cat.com.tw/inquire/TraceDetail.aspx?BillID=' + @order.delivery_no, :target => '_blank', :class => 'link-to-questions'
+    - else
+      .columns
+        .column.is-left
+          | 你的包裹號碼為: 
+          b
+            strong
+              = @order.delivery_no
+          | &nbsp 請點選你寄送的超商，輸入取件號碼至出現的頁面中做查詢，謝謝！
+      .columns.is-mobile
+        .column.is-5.is-center.button
+          = link_to '7-11', 'https://eservice.7-11.com.tw/e-tracking/search.aspx', :target => '_blank', :class => 'link-to-questions'
+        .column.is-5.is-offset-2.is-center.button
+          = link_to '全家/萊爾富/OK', 'https://b2b.cvs.com.tw/cvs2/order/index.cfm?ECNo=152', :target => '_blank', :class => 'link-to-questions'
+  - else
+    .columns
+      .column.is-6.is-offset-3.button.is-disabled
+        | 無法查詢配送狀態
+
+br

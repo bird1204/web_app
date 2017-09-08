@@ -1,0 +1,171 @@
+@import import
+
+.breadcrumbs-wrapper
+  background-color: $white
+  padding: 18px 0 18px 65px
+  @media all and (max-width: 959px)
+    padding: 6px 0 6px 20px
+
+  .breadcrumbs
+    li
+      + li
+        &::before
+          content: '/'
+          margin: 0 10px
+
+  .breadcrumb-item
+    @include font-size(16px)
+    color: $gama-blue
+    line-height: 1.5
+    display: inline-block
+
+    a
+      color: $gama-blue
+
+      &:visited,
+      &:hover
+        color: $gama-blue
+        border-bottom: 0
+
+.item-wrapper
+  padding: 30px 0
+  width: 100%
+
+  img
+    width: 100%
+
+  .item-image
+    border-radius: 10px
+    border: solid 1px #979797
+
+  .item-card
+    background-color: $white
+    border-radius: 10px
+
+    .item-card-header
+      @include font-size(24px)
+      font-weight: $font-weight-title
+      line-height: 1.1
+      border-bottom: solid 1px #7f7f7f
+      padding: 25px 0 25px 30px
+
+      .item-price
+        @include font-size(36px)
+        font-weight: $font-weight-title
+        letter-spacing: 3.7px
+
+      .item-original-price
+        @include font-size(18px)
+        font-weight: $font-weight-title
+        letter-spacing: 1.8px
+
+    .item-card-content
+      @include font-size(24px)
+      line-height: 1.1
+      color: #2a2c2e
+      padding: 35px 30px
+
+      .feature-title
+        @include font-size(20px)
+        font-weight: $font-weight-title
+        letter-spacing: 2.9px
+        text-align: center
+        color: $title-black
+
+      .feature-list
+        margin: 0
+        padding: 0
+        list-style: none
+        margin-top: 30px
+
+        li
+          counter-increment: item
+          margin-bottom: 5px
+          display: inline-block
+
+          &::before
+            @include font-size(16px)
+            background-color: $price-red
+            border-radius: 22px
+            width: 22px
+            height: 22px
+            content: counter(item)
+            display: inline-block
+            text-align: center
+            color: $white
+            font-weight: $font-weight-title
+            letter-spacing: 1.4px
+            padding-top: 3px
+
+        .feature-content
+          @include font-size(20px)
+          line-height: 1.5
+          letter-spacing: 3.1px
+          position: relative
+          bottom: 25px
+          padding-left: 40px
+
+
+      &.item-specification
+        font-weight: $font-weight-title
+        line-height: 1.1
+        text-align: justify
+        color: $title-black
+
+        h3
+          display: none
+
+    .country-icon
+      img
+        width: 45px
+
+    .item-title
+      @include font-size(28px)
+      color: #373a3c
+      padding-right: 25px
+      margin-top: 0
+
+    .premise-message
+      padding: 28px 0
+      text-align: center
+
+    .premise-title
+      @include font-size(14px)
+      padding: 20px 8px
+      line-height: 2.2
+      letter-spacing: 2.2px
+      color: $price-red
+
+    .icon-image
+      width: 45px
+      height: 45px
+      vertical-align: middle
+
+  .add-to-cart-button
+    background-color: $price-red
+
+    .add-to-cart-title
+      @include font-size(20px)
+      letter-spacing: 2.9px
+      text-align: center
+      color: $white
+      width: 100%
+      padding: 15px 0
+
+    &.fixed
+      position: fixed
+      width: 100%
+      bottom: 0px
+      z-index: $z-index-overlap -1
+
+  .not-buyable-button
+    border-radius: 6px
+    border: solid 1px #979797
+
+    .not-buyable-title
+      @include font-size(20px)
+      letter-spacing: 2.9px
+      text-align: center
+      width: 100%
+      padding: 15px 0
+      color: #979797

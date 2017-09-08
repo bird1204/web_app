@@ -1,0 +1,6 @@
+form#pay2go-form action="#{@pay2go_args['PaytogoURL']}" method="POST"
+  - @pay2go_args.each do |key, value|
+    input type="hidden" name=key value=value
+
+- content_for :javascript do
+  = javascript_include_tag 'pay2go', defer: 'defer'

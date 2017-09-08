@@ -1,0 +1,136 @@
+header
+  .header
+    = image_tag 'web_banner.jpg', srcset: "#{asset_path('extra_web_banner.jpg')} 2x", style: 'width:100%;', id: 'low-fee-banner', alt: '柑仔店'
+    nav.nav
+      .container
+        .nav-left
+          = link_to root_path, {class: 'is-brand'}
+            = image_tag "logo.png", alt: '柑仔店'
+
+        .nav-center
+          .nav-item
+            .dropdown-menu
+              a.nav-button
+                | 精選主題
+              .menu-list.large-menu
+                - @topic_menu.each_with_index do |topic|
+                  = link_to topic_path(id: topic.id), class: "item-block"
+                    .item-title
+                      = topic.name
+          .nav-item
+            .dropdown-menu
+              a.nav-button
+                | 類別分類
+              .menu-list.level-menu
+                - @classifications.each do |father, sons|
+                  li
+                    .item-title
+                      = link_to classification_path(id: sons.first.try(:id))
+                        = father
+                    ul
+                      - sons.each do |classification|
+                        li.sub
+                          = link_to classification_path(id: classification.id.to_i, sort_id: params[:sort_id], tag: params[:tag_id])
+                            = classification.name
+
+          .nav-item
+            .dropdown-menu
+              a.nav-button
+                | 國家分類
+              .menu-list
+                - @countries.each_with_index do |classification|
+                  = link_to classification_path(id: classification.id), class: "item-block"
+                    .item-title
+                      = classification.name
+          .nav-item
+            .dropdown-menu
+              a.nav-button
+                | 官方App
+              .menu-list.app-download-menu.large-menu
+                p.app-download-title
+                  | 立即下載甘仔店App!
+                  br
+                  | 讓你隨時隨地，購物更便利
+                .app-download-button
+                  .ios-button.store-button
+                    a rel="nofollow" href="https://itunes.apple.com/tw/app/gan-zi-dian-yi-guo-ling-shi/id919357962?mt=8" target="_blank"
+                      = render partial: "svg/app_store"
+
+                  .android-button.store-button
+                    a rel="nofollow" href="https://play.google.com/store/apps/details?id=com.jumplife.gamadian" target="_blank"
+                      = render partial: "svg/google_play"
+                p.app-download-title style='text-align: center;'
+                  | :::: 感謝報導 :::::
+                .columns
+                  .column
+                    a rel="nofollow" target='_blank' href='https://www.youtube.com/watch?v=9kHXv5dacCE' TVBS
+                    a rel="nofollow" target='_blank' href='https://agirls.aotter.net/post/31516' 電獺少女
+                    a rel="nofollow" target='_blank' href='https://www.kocpc.com.tw/archives/66277' 電腦王阿達
+                    a rel="nofollow" target='_blank' href='https://www.newmobilelife.com/2016/02/03/gamadian/' 流動日報
+                  .column
+                    a rel="nofollow" target='_blank' href='http://gardeniasl.blogspot.tw/2016/03/tiptree.html' 絲黛小姐
+                    a rel="nofollow" target='_blank' href='https://ccc.technews.tw/2015/05/25/gamadian/' 3C新報
+                    a rel="nofollow" target='_blank' href='https://www.inside.com.tw/2017/02/09/jumplife-facebook' Inside
+                    a rel="nofollow" target='_blank' href='http://apps.friday.tw/news/?p=26924' Friday-Play
+
+          .nav-item
+            .dropdown-menu
+              a.nav-button href="https://blog.gamadian.com"
+                | 零食生活報
+
+          .nav-item
+            i.fa.fa-search.fa-2x#search-btn
+
+        .nav-right
+          .dropdown-menu#account-button
+            .account-button-wrapper.nav-item
+              .menu-button
+                = render partial: "svg/head"
+              - if signed_in?
+                span.menu-item
+                  = current_member.name
+                  .box.account-dropdown-menu.dropdown-button
+                    .panel
+                      = link_to members_orders_path, :class  => 'panel-block'
+                        p.panel-item
+                          | 我的訂單
+                      = link_to members_coupons_path, :class  => 'panel-block'
+                        p.panel-item
+                          | 我的優惠券
+                      = link_to edit_members_path, :class  => 'panel-block'
+                        p.panel-item
+                          | 我的帳戶
+                      = link_to member_services_path, :class  => 'panel-block'
+                        p.panel-item
+                          | 客服問答紀錄
+                      = link_to members_signout_path, :class  => 'panel-block'
+                        p.panel-item
+                          | 登出
+              - else
+                = link_to members_signin_path
+                  span.menu-item
+                    | 登入
+          .dropdown-menu
+            span
+              .cart-dropdown-menu
+                .panel
+                  - progress_bar = (@cart.total_amount / @cart.free_ship_threshold * 100.0).round()
+                  .panel-header
+                    p.panel-title
+                      - if @cart.total_amount >= @cart.free_ship_threshold
+                        | 此筆訂單可享免運費！
+                      - else
+                        | 還差＄
+                        = (@cart.free_ship_threshold - @cart.total_amount).to_i
+                        | 元可享免運！
+                    .panel-status-bar
+                      progress.progress.is-info value="#{progress_bar}" max="100"
+                        = progress_bar
+                  = render partial: "carts/cart"
+            #cart-button.menu-button.cart-menu-button.nav-item
+              i
+                .badge data-count=@cart.total_item_quantity
+                = render partial: "svg/cart"
+              span.cart-price
+                | $
+                = @cart.total_amount - @cart.coupon_value

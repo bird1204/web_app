@@ -1,0 +1,27 @@
+section.section.order-section
+  .container
+    = form_for @member_service do |f|
+      .order-detail
+        .detail-header-row
+          = render partial: 'member_services/new/title', :locals => {question_id: question_id, f: f}
+        .detail-body
+          .order-summary
+            = render partial: 'member_services/new/usual_contact_info', :locals => {f: f}
+            = f.fields_for :comment do |field|
+              .row
+                .summary-title
+                  = f.label :name, '商品名稱'
+                .summary-price.full-width
+                  = field.text_area :name,  placeholder: '商品名稱', class: 'textarea', required: true
+              .row
+                .summary-title
+                  = f.label :place, '販售地點'
+                .summary-price.full-width
+                  = field.text_field :place,  placeholder: '請告訴我們你在哪裡看到的', class: 'input', required: true
+              .row
+                .summary-title
+                  = f.label :price, '販售價錢'
+                .summary-price.full-width
+                  = field.number_field :price,  placeholder: '請告訴我們賣多少錢', class: 'input', required: true
+          .order-total-amount-row.row
+            = f.submit '提交', class: 'submit'

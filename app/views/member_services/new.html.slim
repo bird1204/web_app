@@ -1,0 +1,9 @@
+/ - if Rails.application.assets.find_asset("member_services_#{params[:question_id]}.js").present? 
+  - content_for :javascript do
+    = javascript_include_tag "member_services_#{params[:question_id]}", defer: 'defer'
+
+- case params[:question_id].to_i
+- when 1..13
+  = render partial: "member_services/new/question_id_#{params[:question_id]}", :locals => {question_id: params[:question_id]}
+- when 14..19
+  = render partial: "member_services/new/question_id_14", :locals => {question_id: params[:question_id]}

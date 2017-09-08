@@ -1,0 +1,41 @@
+/! Overlay
+#classificationOverlay.w3-overlay.w3-animate-opacity style='cursor:pointer'
+/! Sidebar
+#classificationSideBar.gamadian-sidebar.w3-sidebar.w3-bar-block.w3-animate-left
+  aside.menu
+    p style='padding:15px 0px 5px 3%' 主題活動
+    ul
+      - @side_bar_topics.each do |topic|
+        li.w3-button.w3-block.w3-left-align
+          = link_to topic_path(id: topic.id), style: 'color:white;'
+            = topic.name
+    p style='padding:15px 0px 5px 3%' 商品分類
+    ul
+      li.w3-button.w3-block.w3-left-align 
+        = link_to root_path, style: 'color:white;'
+          | 甘仔店首頁
+      - @classifications.each_with_index do |father_and_sons, index|
+        li.w3-button.w3-block.w3-left-align onclick="window.myAccFunc(this, #{index});" 
+          = father_and_sons[0]
+        - if toggle_classifications(father_and_sons[1])
+          .w3-bar-block.w3-hide.w3-white.w3-card-4.w3-show
+            - father_and_sons[1].each do |classification|
+              - if "#{classification.id}" == params[:id]
+                = link_to classification_path(classification.id), class: 'w3-bar-item w3-button', style: 'color:#1e9eae;'
+                  = classification.name
+              - else
+                = link_to classification_path(classification.id), class: 'w3-bar-item w3-button', style: 'color:white;'
+                    = classification.name
+        - else
+          .w3-bar-block.w3-hide.w3-white.w3-card-4        
+            - father_and_sons[1].each do |classification|
+              = link_to classification_path(classification.id), class: 'w3-bar-item w3-button', style: 'color:white;'
+                = classification.name
+    p style='padding:15px 0px 5px 3%' 甘仔店大小事
+    ul
+      a rel="nofollow" href='https://www.facebook.com/GamadianTaiwan/' style='color:white;' target='_blank'
+        li.w3-button.w3-block.w3-left-align 甘仔店粉絲團
+      a rel="nofollow" href='https://www.instagram.com/gamadian.app/' style='color:white;' target='_blank'
+        li.w3-button.w3-block.w3-left-align 甘仔店IG
+      a href='https://blog.gamadian.com' style='color:white;' target='_blank'
+        li.w3-button.w3-block.w3-left-align 甘仔店部落格

@@ -1,0 +1,10 @@
+.row
+  .summary-title
+    = f.label :contact, '聯絡姓名'
+  .summary-price.full-width
+    = f.text_field :contact, placeholder: '請輸入聯絡姓名', class: 'input', required: true
+.row
+  .summary-title
+    = f.label :contact_method, '手機電話'
+  .summary-price.full-width
+    = f.phone_field :contact_method, placeholder: '請輸入手機電話', class: 'input', required: true,pattern: "[0-9]{10}", data: {errormessage: '請確認手機是否正確'}

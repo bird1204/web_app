@@ -1,0 +1,87 @@
+- content_for :meta_tag do
+  = render partial: "layouts/meta", :locals => {keywords: "#{params[:keyword]},甘仔店,零食",
+  image: normal_size(@meta['covers'].first['pic_url'])}
+
+script type='application/ld+json'
+  | {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "https://www.gamadian.com/",
+        "name": "甘仔店"
+      }
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "https://www.gamadian.com/gamaitems/#{@gamaitems.first.try(:id)}",
+        "name": "#{params[:keyword]}"
+      }
+    }]
+  | }
+
+- content_for :javascript do
+  = javascript_include_tag 'gamaitems', defer: 'defer'
+  = javascript_include_tag 'lib/owl.carousel.min', defer: 'defer'
+
+.breadcrumbs-wrapper
+  .container
+    ol.breadcrumbs
+      li.breadcrumb-item
+        = link_to '甘仔店', root_path
+      li.breadcrumb-item
+        | 搜尋
+      li.breadcrumb-item
+        = params[:keyword]
+
+section
+  .container.banner-container
+    .banner-slides-wrapper
+      #owl-slider.owl-carousel.owl-theme
+        - @meta['covers'].each do |cover|
+          - if cover['kind'] == "2"
+            - cover_content = JSON.parse cover['kcontent']
+            - unless cover_content['item_id'].nil?
+              a[href=gamaitem_path(id: cover_content['item_id'])]
+                .item
+                  | <img class="image-container lazyOwl" data-src="
+                  = large_size(cover['pic_url'])
+                  | ">
+          - else
+            .item
+              | <img class="image-container lazyOwl" data-src="
+              = large_size(cover['pic_url'])
+              | ">
+      .slider-btn.prev-btn data-side="prev"
+        | &#10094;
+      .slider-btn.next-btn data-side="next"
+        | &#10095;
+
+- if @gamaitems.present?
+  = render partial: 'layouts/items', :locals => {gamaitems: @gamaitems}
+
+  section.section.pagination-wrapper
+    nav.pagination
+      ul
+        - (1 .. @meta['total_page']).each do |page|
+          li
+            - if params[:page].to_i == page
+              = button_to gamaitems_search_path(keyword: params[:keyword], page: page), class: "button is-primary"
+                = page
+            - else
+              = button_to gamaitems_search_path(keyword: params[:keyword], page: page), class: "button"
+                = page
+- else
+  p.no-gamaitems-message
+    = "目前沒有跟『#{params[:keyword]}』有關的零食～"
+
+javascript:
+  fbq('track', 'Search', 
+    { content_type: 'product', 
+      content_ids: #{@gamaitems.map{|g| g.id.to_i}},
+      search_string: '#{params[:keyword]}'
+    }
+  )

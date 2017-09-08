@@ -1,0 +1,50 @@
+.order-detail.order-preview
+  .detail-header-row#order-detail-header
+    .detail-title
+      | 訂單明細 ▾
+
+    .order-total-amount
+      = "$#{@cart.totalprice.to_i}"
+
+  .hide.detail-body#order-detail-body
+    hr.detail-border
+    - @cart.line_items.each do |line_item|
+      .row
+        = image_tag line_item.gamaitem.product_image, :class => "order-item-image"
+        .item-info
+          .item-title
+            = line_item.gamaitem.name
+          .item-price
+            | $
+            = line_item.quantity * line_item.gamaitem.price
+          .item-quantity
+            = line_item.quantity
+    .order-summary
+      .row
+        .summary-title
+          | 小計
+        .summary-price
+          | $
+          = @cart.total_amount
+      .row
+        .summary-title
+          | 運費
+        .summary-price
+          | $
+          = @cart.shipping_fee.to_i
+      .row
+        .summary-title
+          | 優惠碼
+        .coupon-code
+          = @cart.coupon.try(:code) || ""
+        .summary-price
+          = "- $#{@cart.coupon_value}"
+
+    .order-total-amount-row.row
+      .total-amount-title
+        | 結帳金額
+      .total-amount-price
+        | $
+        = @cart.totalprice.to_i
+
+

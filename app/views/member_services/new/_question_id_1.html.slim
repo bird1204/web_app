@@ -1,0 +1,87 @@
+- content_for :javascript do
+  = javascript_include_tag "member_services_1", defer: 'defer'
+section.section.order-section
+  .container
+    = form_for @member_service do |f|
+      .order-detail
+        .detail-header-row#order-detail-header
+          .detail-title
+            = f.hidden_field :question_id, value: params[:question_id]
+            | 更改收件人資料、電子發票
+        .detail-body
+          .order-summary
+            .row
+              .summary-title
+                = f.label :order_id, '訂單編號'
+              .summary-price.full-width
+                = f.text_field :order_id, value: @order.ordernumber, placeholder: '請輸入訂單編號', readonly: true
+            .row
+              .summary-title
+                = f.label :contact, '訂單收件人'
+              .summary-price.full-width
+                = f.text_field :contact, value: @order.name, placeholder: '請輸入訂單收件人', readonly: true
+            .row
+              .summary-title
+                = f.label :contact_method, '電話號碼'
+              .summary-price.full-width
+                = f.text_field :contact_method, value: @order.phone, placeholder: '請輸入電話號碼', readonly: true
+          .order-summary
+            .row
+              .description
+                | 請於下方欲修改的部分填入正確的資訊，不需修改的部分保持空的欄位即可!
+          = f.fields_for :comment do |comment_field|
+            .order-summary
+              .row
+                .summary-title
+                  = comment_field.label :name, '更改姓名:'
+                .summary-price.full-width
+                  = comment_field.text_field :name, placeholder: '請輸入更改姓名'
+              .row
+                .summary-title
+                  = comment_field.label :phone, '更改電話:'
+                .summary-price.full-width
+                  = comment_field.phone_field :phone, placeholder: '請輸入更改電話', pattern: "[0-9]{10}", data: {errormessage: '請確認手機是否正確'}
+              .row
+                .summary-title
+                  = comment_field.label :reason, '更改原因:'
+                .summary-price.full-width
+                  = comment_field.text_field :reason, placeholder: '請輸入更改原因'
+            .order-summary 
+              = comment_field.fields_for :invoice do |invoice_field|
+                .row
+                  .summary-title
+                    = invoice_field.label :type, '更改發票:'
+                  .summary-price.full-width
+                    p.control.select.is-fullwidth name='member_service[comment][invoice][type]'
+                      = invoice_field.select :type, options_for_select(MemberService::INVOICE_TYPE.collect.with_index{ |key, value| [key, value+1] })
+                .triple-invoice.hide
+                  .row
+                    .summary-title
+                      = invoice_field.label :buyer_ubn, '統一發票:'
+                    .summary-price.full-width
+                      = invoice_field.text_field :buyer_ubn, placeholder: '必填', pattern: "[0-9]{8}", data: {errormessage: '請確認統編是否正確'}
+                  .row
+                    .summary-title
+                      = invoice_field.label :address, '填寫發票寄送地址:'
+                    .summary-price.full-width
+                      .input-row#twzipcode  
+                        = content_tag(:p, nil, data: {role: "county", value: current_member.try(:city), name: "member_service[comment][invoice][city]"}, class: ['control', 'select', 'is-fullwidth'])
+                        = content_tag(:p, nil, data: {role: "district", value: current_member.try(:city_area), name: "member_service[comment][invoice][city_area]"}, class: ['control', 'select', 'is-fullwidth'])
+                        = invoice_field.text_field :address, placeholder: '請在此輸入填寫發票寄送地址'
+                  .row
+                    .summary-title
+                      = invoice_field.label :carrier_type, '發票載具:'
+                    .summary-price.full-width
+                      p.control.select.is-fullwidth name='member_service[comment][invoice][type]'
+                        = invoice_field.select :carrier_type, options_for_select(MemberService::INVOICE_CARRIER_TYPE.collect.with_index{ |key, value| [key, value+1] })
+                      = invoice_field.text_field :carrier_num, placeholder: '請輸入發票載具編號'
+            .des-invoice-seven-notitext
+              .row
+                .summary-title
+                  = '您同意電子發票出貨後七天開立，中獎會自動通知！'
+              .row
+                .summary-title
+                  = '您同意辦理取消或更改時，將由甘仔店代為處理退貨憑證(例:發票.收據.銷貨退回證明單等)，以加速退款及行政作業流程。'
+
+          .order-total-amount-row.row
+            = f.submit '提交', class: 'submit'

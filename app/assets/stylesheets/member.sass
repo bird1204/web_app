@@ -1,0 +1,244 @@
+@import import
+
+.member-area
+  width: 100%
+  display: inline-block
+  position: relative
+  margin: 90px auto 50px
+  background-color: $background-gray
+  table.is-mobile
+    width: 90%
+    margin: 0px 5% 0px 5%
+    tr
+      td
+        width: 50%
+        .member-nav-item-is-mobile
+          @include font-size(24px)
+          font-weight: $font-weight-title
+          color: $text-black
+          width: 100%
+          padding: 15px 0 15px 20px
+          display: inline-block
+          &.active
+            color: $white
+            background-color: $button-blue
+            border-radius: 6px
+          &:not(:last-child)
+            margin-bottom: 28px
+
+.member-nav
+  width: 15%
+  float: left
+  margin-left: 10%
+  display: inline-block
+
+  .member-nav-item
+    @include font-size(24px)
+    font-weight: $font-weight-title
+    color: $text-black
+    width: 100%
+    padding: 15px 0 15px 20px
+    display: inline-block
+
+    &.active
+      color: $white
+      background-color: $button-blue
+      border-radius: 6px
+
+    &:not(:last-child)
+      margin-bottom: 28px
+
+
+.content-container
+  width: 60%
+  margin-left: 30px
+  float: left
+
+  &.is-mobile
+    width: 90%
+    margin: 0px 5% 0px 5%
+
+  .mobile-head
+    font-size: 24px
+
+  .mobile-hr
+    height: 10px
+    margin: 0px 0px 0px 0px
+
+  .blank-div
+    height: 50px
+
+  .tabs
+    ul
+      border-bottom: solid 2px #ccc
+
+      li
+        margin-bottom: 10px
+        a
+          @include font-size(20px)
+          font-weight: $font-weight-title
+          line-height: 1.3
+          color: $text-black
+          border: 0
+
+        &.is-active
+          a
+            color: $gama-blue
+
+        &:not(:last-child)
+          margin-right: 70px
+
+.coupon-container
+  display: inline-block
+  width: 70%
+  &.is-mobile
+    width: 90%
+    margin: 0px 5% 0px 5%
+
+  .coupon-item
+    float: left
+    margin-left: 3%
+    display: inline-block
+    padding: 20px 0
+
+  .coupon-header
+    @include font-size(20px)
+    width: 100%
+    background-color: $text-black
+    border-top-left-radius: 10px
+    border-top-right-radius: 10px
+    font-weight: $font-weight-title
+    letter-spacing: 2.9px
+    color: $white
+    display: inline-block
+    position: relative
+
+    .coupon-code
+      margin-left: 9%
+      &.is-mobile 
+        margin-left: 40px
+
+  .coupon-row
+    width: 100%
+    background-color: $white
+    display: inline-block
+    position: relative
+    border: solid 1px #dcdcdc
+    color: $text-black
+
+    &:last-child
+      border-bottom-left-radius: 10px
+      border-bottom-right-radius: 10px
+
+  .row
+    display: flex
+    align-items: center
+
+  .coupon-code
+    width: 15%
+    min-width: 120px
+    &.is-mobile
+      width: 15%
+      min-width: 80px
+      margin
+
+  .coupon-content
+    width: 14%
+    &.is-mobile
+      width: 30%
+
+  .coupon-description
+    width: 25%
+
+    small
+      display: none
+
+  .coupon-deadline
+    width: 14%
+
+  .coupon-countdown
+    width: 6%
+    &.is-mobile
+      width: 15%
+
+  .discount-wording
+    @include font-size(18px)
+    color: $price-red
+    font-weight: $font-weight-title
+    padding-bottom: 5px
+
+  .notice-wording
+    margin-left: 40px
+    padding: 60px 0
+
+    .notice-title
+      @include font-size(24px)
+      font-weight: $font-weight-title
+      letter-spacing: 3.5px
+      color: $text-black
+
+    .notice-desciption
+      @include font-size(18px)
+      line-height: 1.4
+      color: #9b9b9b
+
+
+.order-row
+  width: 100%
+  border-radius: 6px
+  background-color: $white
+  border: solid 1px #ccc
+  box-shadow: 5px $white inset
+  display: inline-block
+  position: relative
+
+  &:not(:last-child)
+    margin-bottom: 10px
+
+  .order-image
+    margin: 10px
+    width: 120px
+    float: left
+
+  .row
+    margin: 22px 0
+
+  .order-information
+    margin-left: 8px
+    width: 200px
+    float: left
+
+    .info-item
+      @include font-size(18px)
+      float: left
+      font-weight: $font-weight-title
+      color: #9b9b9b
+
+  .order-price
+    @include font-size(24px)
+    font-weight: 600
+    letter-spacing: .5px
+    float: right
+    color: $price-red
+    margin: 8px 28px 8px 0
+
+  .order-status
+    padding: 6px 18px
+    float: right
+    color: $white
+    border-radius: 6px
+    background-color: $button-blue
+    margin: 8px 20px 8px 0
+
+    &.status-done
+      background-color: $price-red
+
+.order-detail
+  .not-status
+    @include font-size(15px)
+  .is-status
+    @include font-size(15px)
+    color: $price-red
+    font-weight: bold
+    border: 0.5px solid $price-red
+    border-radius: 20px

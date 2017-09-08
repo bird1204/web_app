@@ -1,0 +1,28 @@
+meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' name='viewport'
+
+meta name='keywords' content="#{local_assigns.fetch(:keywords, nil)}"
+meta name='description' content="找『甘仔店』，也找『柑仔店』 --- #{local_assigns.fetch(:description, '常常穿梭許多小店和高級超市尋找異國餅乾點心嗎？甘仔店是全台首間搜羅全世界異國零食的網路服務，我們主打「種類最齊、周周新品、快速出貨、限時特惠」嚴選出世界各國餅乾、糖果、巧克力、泡麵即食、下酒菜等，並且堅持最簡單方便的購物流程，讓您不用出門就可以在家享受到世界各國零食的美味！')}"
+
+
+meta property='og:description' content="找『甘仔店』，也找『柑仔店』 --- #{local_assigns.fetch(:description, '常常穿梭許多小店和高級超市尋找異國餅乾點心嗎？甘仔店是全台首間搜羅全世界異國零食的網路服務，我們主打「種類最齊、周周新品、快速出貨、限時特惠」嚴選出世界各國餅乾、糖果、巧克力、泡麵即食、下酒菜等，並且堅持最簡單方便的購物流程，讓您不用出門就可以在家享受到世界各國零食的美味！')}"
+meta property='og:image' content=local_assigns.fetch(:image, 'https://www.gamadian.com/assets/logo-9406b5c1c6870260b88f4616d097dc596d4ed0710b348ef701af4a17cf48cdcf.png')
+meta property='fb:app_id' content="617652041684118"
+meta property='og:url' content=local_assigns.fetch(:canonical, 'https://www.gamadian.com')
+meta property='og:type' content='website'
+meta property='og:site_name' content='甘仔店'
+
+- if content_for?(:title)
+  meta property='og:title' content="#{yield(:title)}| | 甘仔店｜異國零食專賣---全世界必吃進口零食、餅乾、泡麵、下酒菜、巧克力、咖啡，日韓歐美東南亞零食一網打盡"
+- else
+  meta property='og:title' content="甘仔店｜異國零食---全世界必吃進口零食、餅乾、泡麵、下酒菜、巧克力、咖啡，日韓歐美東南亞零食一網打盡"
+
+
+link rel='alternate' href=local_assigns.fetch(:canonical, 'https://www.gamadian.com')
+- if local_assigns.has_key? :canonical
+  link rel='canonical' href=local_assigns.fetch(:canonical, 'https://www.gamadian.com')
+
+- if local_assigns.has_key? :android_link
+  link rel='alternate' href=android_link
+
+- if local_assigns.has_key? :ios_link
+  link rel='alternate' href=ios_link

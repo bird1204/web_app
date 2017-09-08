@@ -1,0 +1,35 @@
+.apply-coupon
+  .form-section
+    h4.title
+      | 優惠碼
+    .input-row
+      = text_field_tag :promocode, coupon_code_default(@cart), class: "input-with-button hide", id: "coupon-code", placeholder: "請輸入您的優惠代碼"
+      = select_tag 'promocode', options_for_select(coupon_humanlize(@coupons), coupon_code_default(@cart)), include_blank: coupon_code_blank(@coupons), class: "input-with-button", disabled: @cart.coupon.present?, id: 'coupon-code'
+      = use_coupon_code @cart
+    .input-row
+      a.manual-coupon-converter 想要自己輸入優惠碼？請點我
+    .input-padding
+    - if flash.alert.present?
+      .notification.is-error
+        = flash.alert
+    - elsif @cart.coupon.present?
+      .notification.is-success
+        | 優惠碼使用成功
+
+  = hidden_field_tag :promocode, @cart.coupon.try(:code)
+
+  coffee:
+    if window.jQuery
+      $ ->
+        $('a.manual-coupon-converter').click ->
+          $('input#coupon-code').toggle()
+          $('select#coupon-code').toggle()
+          if $('select#coupon-code').is(':visible')
+            $('a.manual-coupon-converter').html('我要自己輸入優惠碼')
+          if $('input#coupon-code').is(':visible')
+            $('a.manual-coupon-converter').html('從我擁有的優惠碼中選擇')
+        $('#use-coupon-code').on 'ajax:beforeSend', (event, xhr, settings) ->
+          if $('input#coupon-code').is(':visible')
+            settings.url += '?' + jQuery.param(promocode: $('input#coupon-code').val())
+          if $('select#coupon-code').is(':visible')
+            settings.url += '?' + jQuery.param(promocode: $('select#coupon-code').val())

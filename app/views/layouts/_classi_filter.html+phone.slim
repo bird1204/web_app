@@ -1,0 +1,103 @@
+#filter_sidebar.w3-sidebar.w3-bar-block.w3-animate-right.w3-collapse
+	.content
+		= form_tag classification_path, method: :get do
+			= hidden_field_tag 'sort_id', params[:sort_id]
+			table.table
+				thead.theader.expand
+					tr
+						th colspan="3"
+						  | 產地&nbsp
+						  span.sign
+				tbody
+					- count = 0
+					- @areas.each do |area|
+						- if count % 3 == 0
+							tr
+						- count += 1
+						th
+							#checkbox_button
+								label
+									/ input type="checkbox" name="tag_ids[]" value=i checked=(params[:tag_id].present? ? (params[:tag_id].split(",").include?(i.to_s)):false)
+									= check_box_tag 'area_ids[]', area.id, (params[:area_ids] ? (params[:area_ids].include?(area.id.to_s)):false), {multiple: true, onclick: "cal_item_on_area(#{area.id}, #{area.gamaitems.size});", id: "area_ids_" + area.id.to_s}
+									span
+										= area.name
+				- @tags_hash.each do |key, value|
+					thead.theader.expand
+						tr
+							th colspan="3"
+							  = key + " "
+							  span.sign
+					tbody
+						- count = 0
+						- value.each do |tag|
+							- if count % 3 == 0
+								tr
+							- count += 1
+							th
+								#checkbox_button
+									label
+										/ input type="checkbox" name="tag_ids[]" value=i checked=(params[:tag_id].present? ? (params[:tag_id].split(",").include?(i.to_s)):false)
+										= check_box_tag 'tag_ids[]', tag.id, (params[:tag_ids] ? (params[:tag_ids].include?(tag.id.to_s)):false), {multiple: true, :onclick => "cal_item_on_filter(#{tag.id}, #{tag.gamaitems.size});", id: "tag_ids_" + tag.id.to_s}
+										span
+											= tag.name
+			.bottom
+				a.button.button-no-radius style="width:40%; bottom:0; color:black;" onclick="reset_filter()" 重 置
+				= submit_tag (@filter_count>0? "確 認(" + @filter_count.to_s + "件商品)":"確 認"), class: "button is-danger button-no-radius", style: "width:60%; bottom:0;", id: "total-count"
+	button.delete.w3-display-topright.button_custom onclick="w3_close()"
+
+javascript:
+	
+	var total_count = #{{@filter_count}};
+
+	function w3_open() {
+	  document.getElementById("filter_sidebar").style.display = "block";
+	  $('#classificationOverlay').toggle()
+	  if ($('#classificationSideBar') !== null)
+			$('#classificationSideBar').hide()
+	}
+
+	function w3_close() {
+	  document.getElementById("filter_sidebar").style.display = "none";
+	  $('#classificationOverlay').hide()
+	}
+
+	function cal_item_on_area(id, count) {
+		var checkbox_id = 'area_ids_' + id;
+		modify_submit_ui(checkbox_id, count);
+	}
+
+	function cal_item_on_filter(id, count) {
+		var checkbox_id = 'tag_ids_' + id;
+		modify_submit_ui(checkbox_id, count);
+	}
+
+	function modify_submit_ui(checkbox_id, count) {
+
+		if (document.getElementById(checkbox_id).checked) {
+				total_count += count;
+	  } else {
+	  		total_count -= count;
+	  }
+
+	  if (total_count > 0)
+	  	document.getElementById('total-count').value = "確 認(" + total_count + "件商品)";
+	  else
+	  	document.getElementById('total-count').value = "確 認";
+	}
+
+	function reset_filter() {
+		var tag_checkboxes = document.getElementsByName('tag_ids[]');
+		for (var i=0, n=tag_checkboxes.length;i<n;i++) {
+		    tag_checkboxes[i].checked = false
+		}
+		var area_checkboxes = document.getElementsByName('area_ids[]');
+		for (var i=0, n=area_checkboxes.length;i<n;i++) {
+		    area_checkboxes[i].checked = false
+		}
+		document.getElementById('total-count').value = "確 認";
+	}
+
+	$('.theader').click(function(){
+		console.log("click theader");
+     $(this).toggleClass('expand').nextUntil('thead.theader').slideToggle(100);
+	});

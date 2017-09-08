@@ -1,0 +1,40 @@
+.card
+  javascript:
+    dataLayer.push(
+      { 
+      'event': 'gamaitemImpressive', 
+      'gamaitemId' : '#{item.id}',
+      'gamaitemName': '#{item.name}',
+      'impressiveAt': '#{request.path != "/" ? request.path.split("/")[1] : "index"}',
+      'impressiveAtId': '#{request.path != "/" ? request.path.split("/")[2] : nil}',
+      }
+    );
+  meta itemprop="url" content=gamaitem_url(id: item.id)
+  a[href=gamaitem_path(id: item.id)
+    onclick="dataLayer.push({ 'event': 'productClick', 'ecommerce': { 'click': { 'actionField': {}, 'products': [{ 'name': '#{item.name}', 'id': '#{item.id}' }] } }, 'eventCallback': function() { document.location = '#{gamaitem_path(id: item.id)}' } });"]
+    .card-image
+      figure.image
+        - if item.product_image.present?
+          = image item.product_image, item.name, [:mini, :small], 'item-country-icon', "#{item.name}｜柑仔店｜#{item.area_name}零食" ,itemprop: "image"
+        - else
+          = image item.product_images[0], item.name, [:mini, :small], 'item-country-icon', "#{item.name}｜柑仔店｜#{item.area_name}零食" ,itemprop: "image"
+    .card-contents
+      .media
+        .media-left
+          figure.image.is-32x32
+            img src=item.area_poster_url alt="#{item.area_name}｜#{item.area_name}零食"
+        .media-content
+          p.item-title itemprop="name"
+            = item.name
+      div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer"
+        meta content="TWD" itemprop="priceCurrency"
+        span.item-price
+          | $
+        span.item-price itemprop="price"
+          = item.price
+        span.item-original-price
+          | $
+          = item.original_price
+  .button.add-to-cart-button.is-pulled-right.pull-up
+    span
+      = link_to '加入購物車', carts_put_path(id: item.id), method: :post, remote: true

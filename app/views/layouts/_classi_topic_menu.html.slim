@@ -1,0 +1,41 @@
+aside.menu
+	ul.menu-group
+		- if page_type == "classification"
+			li.item-block
+				a href="#nowhere"
+					.main-item
+						| 國家
+				ul#list
+					- @countries.each do |country|
+						li
+							= link_to classification_path(id: country.id.to_i)
+								.item-title.sub-item class=("active" if params[:id].to_i == country.id.to_i)
+									= country.name
+			- @classifications.each do |father, sons|
+				li.item-block
+					a href='#nowhere'
+						.main-item
+							= father
+					ul#list
+						- sons.each do |classification|
+							li
+								= link_to classification_path(id: classification.id.to_i)
+									.item-title.sub-item class=("active" if params[:id].to_i == classification.id.to_i)
+										= classification.name
+			coffee:
+				$(document).ready ->
+				  $currentClassificationObj = $('a[href="' + window.location.pathname + '"]')
+				  $currentClassificationObj.parents('ul#list').css 'max-height', '50em'
+				  $('aside.menu>ul.menu-group').find('a[href="#nowhere"]').each (i, obj) ->
+				    $(obj).on 'click', ->
+				      if $(this).siblings('ul#list').css('max-height') == '0px'
+				        $(this).siblings('ul#list').css 'max-height', '50em'
+				      else
+				        $(this).siblings('ul#list').css 'max-height', '0px'
+		- else
+			- @topic_menu.each_with_index do |topic, index|
+				li.item-block
+					= link_to topic_path(id: topic.id)
+						.main-item class=("active" if topic.id == params[:id].to_i)
+							= topic.name
+

@@ -1,0 +1,96 @@
+- content_for :title do
+  - if @classification.id.between?(380,385)
+    = "#{@classification.name}零食"
+  - else
+    = @classification.self_and_ancestors.map(&:name).join(' > ')
+  
+- content_for :meta_tag do
+  = render partial: "layouts/meta", :locals => {keywords: "#{@classification.name},甘仔店,零食",
+  description: @classification.id.between?(380,385) ? "#{@classification.name}零食" : @classification.self_and_ancestors.map(&:name).join(' > '),
+  image: normal_size(@meta['covers'].first['pic_url']),
+  android_link: "android-app://com.jumplife.gamadian/classification/#{@classification.id}",
+  ios_link: "ios-app://919357962/classification/#{@classification.id}",
+  canonical: "https://www.gamadian.com/classifications/#{@classification.id}"}
+
+script type='application/ld+json'
+  | {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "https://www.gamadian.com/",
+        "name": "甘仔店"
+      }
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "https://www.gamadian.com/classifications/#{@classification.id}",
+        "name": "#{@classification.name}"
+      }
+    }]
+  | }
+
+- content_for :javascript do
+  = javascript_include_tag 'gamaitems', defer: 'defer'
+  = javascript_include_tag 'lib/owl.carousel.min', defer: 'defer'
+
+.breadcrumbs-wrapper
+  .container
+    ol.breadcrumbs
+      li.breadcrumb-item
+        = link_to root_path
+          | 甘仔店
+
+      - @classification.self_and_ancestors.each do |classification|
+        li.breadcrumb-item
+          = link_to classification_path(id: classification.id)
+            = classification.name      
+
+.columns
+  .column.is-3
+    = render partial: "layouts/classi_topic_menu", :locals => {page_type: "classification"}
+
+  .column.is-9
+    section
+      .container.banner-container.is-fluid
+        .banner-slides-wrapper
+          #owl-slider.owl-carousel.owl-theme
+            - @meta['covers'].each do |cover|
+              - if cover['kind'] == "2"
+                - cover_content = JSON.parse cover['kcontent']
+                - unless cover_content['item_id'].nil?
+                  a[href=gamaitem_path(id: cover_content['item_id'])]
+                    .item
+                      | <img class="image-container lazyOwl" data-src="
+                      = large_size(cover['pic_url'])
+                      | ">
+              - else
+                .item
+                  | <img class="image-container lazyOwl" data-src="
+                  = large_size(cover['pic_url'])
+                  | ">
+          .slider-btn.prev-btn data-side="prev"
+            | &#10094;
+          .slider-btn.next-btn data-side="next"
+            | &#10095;
+
+    / = render partial: "layouts/classification_menu", :locals => {page_type: "classification"}
+    = render partial: 'layouts/classi_filter'
+    = render partial: 'layouts/classi_sort', :locals => {page:params[:page], total_page: @meta['total_page']}
+    = render partial: 'layouts/items', :locals => {gamaitems: @gamaitems}
+
+
+    section.section.pagination-wrapper
+      nav.pagination
+        ul
+          - (1 .. @meta['total_page']).each do |page|
+            li
+              - if params[:page].to_i == page
+                = link_to classification_path(id: params[:id], page: page, sort_id: params[:sort_id]), class: "button is-primary"
+                  = page
+              - else
+                = link_to classification_path(id: params[:id], page: page, sort_id: params[:sort_id]), class: "button"
+                  = page

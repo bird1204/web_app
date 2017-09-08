@@ -1,0 +1,83 @@
+doctype html
+html
+  head
+    title
+      - if content_for?(:title)
+        = yield :title
+        | ---找『甘仔店』，也找『柑仔店』
+      - else
+        | 找『甘仔店』，也找『柑仔店』---進口必吃『異國零食』、餅乾、泡麵、下酒菜、巧克力、咖啡，歐美韓國日本零食
+
+    - if content_for?(:meta_tag)
+      = content_for :meta_tag
+    - else
+      = render partial: "layouts/meta"
+
+    = render partial: "layouts/first_look_css"
+
+    link defer='defer' rel="icon" href="https://www.gamadian.com/favicon.ico" type="image/x-icon"
+    /! Web App Manifest
+    link defer='defer' rel='manifest' href='/manifest.json'
+
+    link rel='preload' as='style' onload="this.rel='stylesheet'" href='//cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.min.css'
+    noscript
+      link href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.min.css" rel="stylesheet"
+
+    link rel="preload" as="style" onload="this.rel='stylesheet'" href="#{stylesheet_path('application')}" media='all' data-turbolinks-track='reload'
+    noscript
+      link rel="stylesheet" href="#{stylesheet_path('application')}" media='all' data-turbolinks-track='reload'
+
+    = csrf_meta_tags
+    link rel='preload' as='style' onload="this.rel='stylesheet'" href='//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
+    noscript
+      link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" 
+    = javascript_include_tag 'first_load'
+    = javascript_include_tag 'application', defer: 'defer'
+    /! webshim
+    script src='//cdnjs.cloudflare.com/ajax/libs/webshim/1.15.10/minified/polyfiller.js' defer='defer'
+    = render partial: "layouts/marketing"
+    = render partial: "layouts/branchio"
+    = render partial: "layouts/facebook"
+    = render partial: "layouts/gtm"
+    javascript:
+      document.documentElement.setAttribute('shouldShowBanner', true)
+      // ssl_redirect
+      document.documentElement.setAttribute("ssl_configured", "#{not Rails.env.development? and not request.path =~ /healthy/}");
+      if( document.documentElement.getAttribute('ssl_configured') == 'true' && window.location.protocol != 'https:'){
+        window.location.replace("https://"+window.location.host+window.location.pathname+window.location.search);
+      }
+      // 判斷是不是mobile
+      document.documentElement.setAttribute("is-mobile-devise", "#{@browser.device.mobile? != nil}");
+      document.documentElement.setAttribute("timestamp", "#{Time.zone.now.to_i}");
+      // datalayer
+      dataLayer = [];
+    - if content_for?(:tracking)
+      = yield :tracking
+  
+  body
+    .loader-overlap
+    .loader
+    div#fb-root
+    = render partial: 'layouts/side_bar'
+    = render partial: "layouts/header"
+    = render partial: 'layouts/search'
+    
+    .page
+      - if !flash.alert.nil?
+        .notification.header-message.is-error
+          = flash.alert
+      - elsif !flash.notice.nil?
+        .notification.header-message.is-success
+          = flash.notice
+
+      = yield
+
+    = render partial: "layouts/seo_content"
+    = render partial: "layouts/footer"
+
+    = yield :javascript
+
+    / = render partial: "layouts/firebase"
+
+    / - if Rails.env.development?
+    /   = console

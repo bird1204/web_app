@@ -1,0 +1,54 @@
+footer.footer
+  .container.has-text-centered
+    .footer-icon-wrapper.follow-us
+      p.icon-title
+        | 關注我們
+      .button-wrapper
+        a.icon-item.icon-item-with-circle rel="nofollow" href="https://www.facebook.com/GamadianTaiwan/" target="_blank"
+          = render partial: "svg/facebook"
+        a.icon-item.icon-item-with-circle rel="nofollow" href="https://www.instagram.com/gamadian.app/" target="_blank"
+          = render partial: "svg/instagram"
+    .footer-icon-wrapper.contact-cs
+      p.icon-title
+        | 甘仔店客服
+      .button-wrapper
+        - if Time.now.between?(Time.parse("#{Date.today} 09:00:00"), Time.parse("#{Date.today} 19:00:00"))
+          a.icon-item.telephone-icon href="tel:0225472827"
+            = render partial: "svg/telephone"
+            .telephone-information
+              p.info-title
+                | 服務電話
+              p.info-content
+                | 02-2547-2827
+              p.info-content
+                | 週一至週五 09:00 ~ 19:00
+          a.icon-item rel="nofollow" href="http://bit.ly/Gamadian_LINE"
+            = image_tag("icon/line.png", :class => "line-icon")
+        a.icon-item rel="nofollow" href="mailto:cservice.gamadian@jumplife.com.tw?subject=[甘仔店-聯絡我們]"
+          = render partial: "svg/mail"
+        
+
+  .container.has-text-centered
+    .copyright-wrapper
+      span.copyright-title
+        | ©2013-2017 Gamadian
+
+      ol.footer-items
+        li
+          = link_to terms_path, class: "footer-link"
+            | 服務條款
+        li
+          = link_to privacy_path, class: "footer-link"
+            | 隱私權政策
+        li
+          = link_to faq_path, class: "footer-link"
+            | 常見問題
+        li
+          button#request-permission.footer-link onclick='requestPermission()' 開啟通知
+
+/ - content_for :javascript do
+/   = javascript_include_tag 'firebase_init'
+
+/ = render partial: "layouts/firebase"
+
+

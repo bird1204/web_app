@@ -1,0 +1,34 @@
+section.section.order-section
+  .container
+    = form_for @member_service do |f|
+      .order-detail
+        .detail-header-row
+          = render partial: 'member_services/new/title', :locals => {question_id: question_id, f: f}
+        .detail-body
+          .order-summary
+            = render partial: "member_services/new/order_default_info", locals: {f: f}
+            .row
+              .description
+                | 請於下表填入多寄商品的數量，我們將盡快為您處理，謝謝！
+            = f.fields_for :comment do |field|
+              table.table
+                thead
+                  tr
+                    th
+                      .is-center
+                        | 商品名稱
+                    th
+                      .is-center
+                        | 商品數量
+                    th
+                      .is-center
+                        | 多寄數量
+                tbody
+                  =render partial: 'member_services/new/order_gamaitems', :locals => {gamaitems: @order.gamaitems, browser: @browser, field: field, question_id: question_id}
+              .row
+                .summary-title
+                  = field.label :content, '備註'
+                .summary-price.full-width
+                  = field.text_area :content,  placeholder: '請輸入備註'
+          .order-total-amount-row.row
+            = f.submit '提交', class: 'submit'

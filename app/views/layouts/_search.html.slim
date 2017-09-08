@@ -1,0 +1,19 @@
+.open-full-screen
+  .head
+    .close
+      a.close-full-screen-btn
+        | ╳
+  .search-box itemscope='' itemtype="http://schema.org/WebSite"
+    meta itemprop="url" content="https://www.gamadian.com/"
+    = form_tag gamaitems_search_path, method: :POST, itemprop: "potentialAction", itemscope: '', itemtype: "http://schema.org/SearchAction" do |f|
+      meta itemprop="target" content="https://www.gamadian.com/gamaitems/search?keyword={keyword}"
+      = text_field_tag :keyword, nil, class: 'form-input', itemprop: "query-input", required: 'required'
+      = submit_tag '搜尋', class: 'form-submit'
+  .recomendation
+    .promote-string
+      | 看看其他人找了什麼
+    ul.keyword-container
+      - @keywords.each do |keyword|
+        li.keyword
+          = button_to gamaitems_search_path(keyword: keyword.string, page: 1), class: 'clear-btn'
+            = keyword.string

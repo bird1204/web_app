@@ -1,0 +1,49 @@
+.image-slider-theme .owl-controls{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+}
+
+/* Clickable class fix problem with hover on touch devices */
+/* Use it for non-touch hover action */
+.image-slider-theme .owl-controls.clickable .owl-buttons div:hover{
+	filter: Alpha(Opacity=100);/*IE7 fix*/
+	opacity: 1;
+	text-decoration: none;
+}
+
+/* Styling Pagination*/
+
+.image-slider-theme .owl-controls .owl-page{
+	display: inline-block;
+	zoom: 1;
+	*display: inline;/*IE7 life-saver */
+}
+.image-slider-theme .owl-controls .owl-page span{
+	display: block;
+	width: 15px;
+	height: 15px;
+	margin: 5px 7px;
+	filter: Alpha(Opacity=50);/*IE7 fix*/
+	opacity: 0.5;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+  background: #fff;
+}
+
+.image-slider-theme .owl-controls .owl-page.active span,
+.image-slider-theme .owl-controls.clickable .owl-page:hover span{
+	filter: Alpha(Opacity=100);/*IE7 fix*/
+	opacity: 1;
+  background: #3db3c0;
+}
+
+/* preloading images */
+.owl-item.loading{
+	min-height: 200px;
+	background: url(//cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.6/assets/ajax-loader.gif) no-repeat center center;
+	background-size: 50px;
+}

@@ -1,0 +1,15 @@
+.row
+  .summary-title
+    = f.label :order_id, '訂單編號'
+  .summary-price.full-width
+    = f.text_field :order_id, value: @order.ordernumber, placeholder: '請輸入訂單編號', readonly: true
+.row
+  .summary-title
+    = f.label :contact, '訂單收件人'
+  .summary-price.full-width
+    = f.text_field :contact, value: @order.name, placeholder: '請輸入訂單收件人', readonly: true
+.row
+  .summary-title
+    = f.label :contact_method, '電話號碼'
+  .summary-price.full-width
+    = f.text_field :contact_method, value: @order.phone, placeholder: '請輸入電話號碼', readonly: true

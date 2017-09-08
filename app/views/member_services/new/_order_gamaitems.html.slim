@@ -1,0 +1,39 @@
+- gamaitems.each_with_index do |gamaitem, index|
+  - case question_id.to_i
+  - when 5
+    tr
+      th
+        .is-left
+          - if browser.device.mobile? || @browser.device.tablet?
+            = truncate(gamaitem['gamaitname'], length: 20)
+          - else
+            = gamaitem['gamaitname']
+      th
+        .is-center
+          = gamaitem['gamaitcount']
+      th
+        .is-center
+          = gamaitem['price']
+      th
+        .is-center
+          = field.fields_for :head do |head_form|
+            = head_form.hidden_field "[#{index}][id]", value: gamaitem['gamaid']
+            = head_form.hidden_field "[#{index}][name]", value: gamaitem['gamaitname']
+            = head_form.number_field "[#{index}][quantity]", value: 0, min: 0, max: gamaitem['gamaitcount'], onchange: 'window.updateAmount()', class: 'input'
+  - when 7..9
+    tr
+      th
+        .is-left
+          - if browser.device.mobile? || @browser.device.tablet?
+            = truncate(gamaitem['gamaitname'], length: 20)
+          - else
+            = gamaitem['gamaitname']
+      th
+        .is-center
+          = gamaitem['gamaitcount']
+      th
+        .is-center
+          = field.fields_for :head do |head_form|
+            = head_form.hidden_field "[#{index}][id]", value: gamaitem['gamaid']
+            = head_form.hidden_field "[#{index}][name]", value: gamaitem['gamaitname']
+            = head_form.number_field "[#{index}][quantity]", min: 0, max: gamaitem['gamaitcount'], class: 'input'

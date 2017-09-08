@@ -1,0 +1,6 @@
+.member-signin
+  .signin-container
+    .title
+      | 登入
+    = form_tag members_signin_path, method: :post do
+      = render partial: "layouts/signin"

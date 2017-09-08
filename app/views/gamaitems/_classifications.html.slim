@@ -1,0 +1,16 @@
+section.hero
+  .container
+    .classification-wrapper
+      - classifications.each_with_index do |topic, index|
+        - if index == 2 || index == 5
+          .row
+        = link_to classification_path(id: topic.id), title: topic.name
+          - if index % 5 == 0 && index != 5
+            .classification-box.classification-box-large
+              = image topic.long_thumbnail, topic.name, [:normal, :normal], 'classification-image'
+          - else
+            .classification-box
+              = image topic.long_thumbnail, topic.name, [:small, :small], 'classification-image'
+        - if index % 3 == 0 || index % 3 == 2 || index == 0
+          .box-padding
+      .row

@@ -1,0 +1,63 @@
+- content_for :title do 
+  = "#{@meta['name']}"
+
+- content_for :meta_tag do
+  = render partial: "layouts/meta", :locals => {keywords: "#{@meta['name']},甘仔店,零食",
+  description: @meta['description'][0..140],
+  image: normal_size(@meta['image_url']),
+  canonical: "https://www.gamadian.com/topics/#{@topic.id}",
+  android_link: "android-app://com.jumplife.gamadian/topics/#{@topic.id}",
+  ios_link: "ios-app://919357962/topics/#{@topic.id}"}
+
+script type='application/ld+json'
+  | {
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@id": "https://www.gamadian.com/",
+        "name": "甘仔店"
+      }
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@id": "https://www.gamadian.com/topics/#{@topic.id}",
+        "name": "#{@meta['name']}"
+      }
+    }]
+  | }
+
+- content_for :javascript do
+  = javascript_include_tag 'lib/owl.carousel.min', defer: 'defer'
+  = javascript_include_tag 'gamaitems', defer: 'defer'
+
+.columns
+  .column.is-3
+    = render partial: "layouts/classi_topic_menu", :locals => {page_type: "topic"}
+
+  .column.is-9
+    section
+      .container.banner-container.is-fluid
+        .banner-slides-wrapper
+          #owl-slider.owl-carousel.owl-theme
+            .item
+              | <img class="image-container lazyOwl" data-src="
+              = large_size(@meta['image_url'])
+              | ">
+    section
+      .container.is-fluid
+        p.topic-description
+          = @meta['description']
+
+    section.section.item-wrapper
+      .container.is-fluid
+        .columns.is-multiline.is-mobile itemscope="" itemtype="http://schema.org/ItemList"
+          - @gamaitems.each do |item|
+            .column.is-one-mobile.is-one-half-tablet.is-one-third-desktop itemprop="itemListElement"  itemscope="" itemtype="http://schema.org/ListItem"
+              meta itemprop="url" content=gamaitem_url(id: item.id)
+              meta itemprop="position" content=@gamaitems.index(item)+1
+              div itemscope="" itemtype="http://schema.org/Product"
+                = render partial: "layouts/item", :locals => {item: item}

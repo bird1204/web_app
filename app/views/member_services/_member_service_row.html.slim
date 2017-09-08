@@ -1,0 +1,19 @@
+.member-service-card
+	div
+		span.member-service-row-title.is-pulled-left
+			| 詢問的問題
+		span.member-service-row-title.is-pulled-right
+			= member_service.created_at
+	br.member-service-clear
+	
+	.title.is-5
+		= member_service.title
+
+	
+	.has-text-right
+		- if member_service.status == "已解決"
+			.tag.is-default
+				= member_service.status
+		- else
+			.tag.is-danger
+				= member_service.status

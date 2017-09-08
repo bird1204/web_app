@@ -1,0 +1,38 @@
+.cart-container
+  - @cart.line_items.each do |line_item|
+    article.media.cart-item.is-marginless
+      .media-left
+        figure.image
+          = link_to gamaitem_path(id: line_item.gamaitem_id)
+            = image_tag preload_size(line_item.gamaitem.product_image), :class => "cart-item-image"
+      .media-content
+        = link_to gamaitem_path(id: line_item.gamaitem_id)
+          span.cart-item-title
+            = line_item.gamaitem.name
+
+        .cart-item-control
+          span.cart-item-price
+            | $
+            = line_item.gamaitem.price
+          .cart-item-quantity-wrapper
+            = link_to carts_take_path(id: line_item.gamaitem_id), method: :post, remote: true, class: "cart-minus-button", id: "loading_button"
+              = render partial: "svg/minus"
+            span.cart-item-quantity
+              = line_item.quantity
+            = link_to carts_put_path(id: line_item.gamaitem_id), method: :post, remote: true, class: "cart-plus-button", id: "loading_button"
+              = render partial: "svg/plus"
+      .media-right
+        = link_to carts_take_path(id: line_item.gamaitem_id, quantity: line_item.quantity), method: :post, remote: true, id: "loading_button"
+          span.item-delete
+            = render partial: "svg/delete"
+.cart-footer
+  hr.cart-footer-hr.is-marginless
+  .footer-row
+    .cart-totel-item-quantity
+      span
+        = @cart.total_item_quantity
+      | 樣商品總計
+    .cart-total-amount
+      | $
+      = @cart.total_amount - @cart.coupon_value
+  = render partial: 'carts/cart_footer', :locals => {cart: @cart}

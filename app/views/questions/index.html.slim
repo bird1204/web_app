@@ -1,0 +1,72 @@
+section.section.order-section
+  .container
+    .order-detail
+      .detail-header-row
+        .detail-title
+          | 更改訂單/商品問題
+      .detail-body
+        .order-summary
+          - case @order.situation_of_cargo_id
+          - when 1, 2, 3
+            .row
+              =link_to '更改收件人資料、電子發票', new_member_services_path(question_id: 1), class: 'summary-title'
+            .row
+              .summary-title 
+                | 更新付款方式  
+            .row
+              .summary-title 
+                | 修改訂單商品數量  
+          - when 4
+            .row
+              =link_to '商品多寄', new_member_services_path(question_id: 7), class: 'summary-title'
+            .row
+              =link_to '商品少寄', new_member_services_path(question_id: 8), class: 'summary-title'
+            .row
+              =link_to '商品破損、變質', new_member_services_path(question_id: 9), class: 'summary-title'
+    .order-detail
+      .detail-header-row
+        .detail-title
+          | 取消訂單
+      .detail-body
+        .order-summary
+          - case @order.situation_of_cargo_id
+          - when 1, 2, 3
+            .row
+              =link_to '取消訂單/退訂(尚未收到貨)', new_member_services_path(question_id: 4), class: 'summary-title'
+          - when 4
+            .row
+              =link_to '取消訂單/退訂(已收到貨)', new_member_services_path(question_id: 5), class: 'summary-title'
+    .order-detail
+      .detail-header-row
+        .detail-title
+          | 詢問出貨進度
+      .detail-body
+        .order-summary
+          .row
+            .summary-title onclick="$('#pop_block').show()"
+              | 想指定到貨時間
+          .row
+            =link_to '過久未到貨', new_member_services_path(question_id: 10), class: 'summary-title'
+    .order-detail
+      .detail-header-row
+        .detail-title
+          | 與我們互動
+      .detail-body
+        .order-summary
+          .row
+            =link_to '電話（一到五，10:00~18:00）', 'tel:02-27632216', class: 'summary-title'
+          .row
+            =link_to 'Line（一到日，09:00~19:00）', 'http://bit.ly/Gamadian_LINE', class: 'summary-title', rel: "nofollow"
+
+.open-full-screen#pop_block onclick="$('#pop_block').hide()"
+  .order-detail style='position: relative;top: calc(50vh - 75px);width: 80%;max-width: 600px;'
+    .detail-header-row style="display: inline-flex;"
+      .detail-title
+        | 指定到貨時間 
+      .detail-title
+        | ╳
+    .detail-body
+      .order-summary     
+        .row
+          .summary-title
+            | 非常不好意思，目前尚未提供指定到貨時間的服務，你可於宅配人員聯絡時，跟他說你可以收貨的時間就好囉   

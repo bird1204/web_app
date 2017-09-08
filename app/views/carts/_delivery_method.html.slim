@@ -1,0 +1,32 @@
+.delivery-method
+  .form-section
+    h4.title
+      | 付款方式
+
+    label for="deliverymethod1"
+      .radio-box
+        span.radio-title
+          input#deliverymethod1 type="radio" name="deliverymethod" value="1" checked=(@cart.delivery_method == Cart::DELIVERY_METHODS[:convenience_store]) disabled=!@cart.convenience_store_available? data-url=carts_update_delivery_method_path(delivery_method: 1) data-remote="true" data-method="post"
+          | 超商取貨付款
+          - if !@cart.convenience_store_available?
+            | (您的結帳商品無法適用超商取貨)
+        span.input-right-text
+          | $
+          = @cart.shipping_fee.to_i
+
+    label for="deliverymethod2"
+      .radio-box
+        span.radio-title
+          input#deliverymethod2 type="radio" name="deliverymethod" value="2" checked=(@cart.delivery_method == Cart::DELIVERY_METHODS[:cod]) data-url=carts_update_delivery_method_path(delivery_method: 2) data-remote="true" data-method="post"
+          | 宅配貨到付款
+        span.input-right-text
+          | $
+          = @cart.shipping_fee.to_i
+    label for="deliverymethod3"
+      .radio-box
+        span.radio-title
+          input#deliverymethod3 type="radio" name="deliverymethod" value="3" checked=(@cart.delivery_method == Cart::DELIVERY_METHODS[:credit_card]) data-url=carts_update_delivery_method_path(delivery_method: 3) data-remote="true" data-method="post"
+          | 宅配信用卡付款
+        span.input-right-text
+          | $
+          = @cart.shipping_fee.to_i

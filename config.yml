@@ -1,0 +1,10 @@
+branch-defaults:
+  master:
+    environment: gamadianweb-dev
+global:
+  application_name: GamadianWeb
+  default_ec2_keyname: gamadianuser
+  default_platform: Docker 1.11.2
+  default_region: ap-northeast-1
+  profile: eb-cli
+  sc: git

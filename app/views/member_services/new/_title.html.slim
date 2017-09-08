@@ -1,0 +1,3 @@
+.detail-title
+  = f.hidden_field :question_id, value: question_id
+  = MemberService::QUESTION_IDS.find{|id, name| id == question_id.to_i}.last

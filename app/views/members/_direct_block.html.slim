@@ -1,0 +1,22 @@
+p.control.has-icon
+  = email_field_tag 'new_email', nil, class: 'signin-input', placeholder: "修改帳號(若不修改，留空即可)"
+  span.input-icon
+    = render partial: "svg/email"
+p.control.has-icon.hide
+  = email_field_tag 'confirm-email', nil, class: 'signin-input', placeholder: "輸入相同的E-mail", data: {'dependent-validation' => 'new_email', 'errormessage' => 'E-mail不一致，請重新輸入'}
+  span.input-icon
+    = render partial: "svg/email"
+
+p.control.has-icon.hide
+  = password_field_tag 'password', nil, class: 'signin-input', placeholder: "請輸入原密碼", pattern: '^.{8,}$', data: {errormessage: '密碼至少八碼'}
+  span.input-icon
+    = render partial: "svg/password"
+
+p.control.has-icon
+  = password_field_tag 'new_password', nil, class: 'signin-input', placeholder: "修改密碼(若不修改，留空即可)", pattern: '^.{8,}$', data: {errormessage: '密碼至少八碼'}
+  span.input-icon
+    = render partial: "svg/password"
+p.control.has-icon.hide
+  = password_field_tag 'confirm-password', nil, class: 'signin-input', placeholder: "輸入相同的新密碼", data: {'dependent-validation' => 'new_password', 'errormessage' => '密碼不一致，請重新輸入'}, pattern: '^.{8,}$'
+  span.input-icon
+    = render partial: "svg/password"

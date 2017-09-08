@@ -1,0 +1,23 @@
+.fb-login-container
+  .fb-login-button data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" data-scope='public_profile,email' onlogin="window.checkFBLoginStatus();"
+
+.login-form
+  p.control.has-icon
+    input.signin-input type="email" name="email" placeholder="E-mail" required="true"
+    span.input-icon
+      = render partial: "svg/email"
+  p.control.has-icon
+    input.signin-input type="password" name="password" placeholder="密碼" required="true" pattern=".{8,}" data-errormessage='密碼至少8碼'
+    span.input-icon
+      = render partial: "svg/password"
+  = hidden_field_tag "next", next_url ||= "/"
+  = hidden_field_tag "provider", "direct"
+  = hidden_field_tag "facebook_token", nil
+  = hidden_field_tag "user_id", nil
+
+  = submit_tag "登入", :class => "submit-button"
+  .row
+    span.item.left-item
+      = link_to '忘記密碼?', members_reset_password_path
+    span.item.right-item
+      = link_to '註冊新帳號', members_signup_path

@@ -1,0 +1,234 @@
+@import import
+
+html
+  @include is-mobile-view(true)
+    overflow-x: hidden
+  body
+    font-family: -apple-system, '-apple-system', 'Helvetica Neue', BlinkMacSystemFont, 'Roboto', Helvetica, 'Microsoft JhengHei', Arial, Verdana, sans-serif
+a
+  color: $black
+
+  &:visited,
+  &:hover
+    color: $black
+    border-bottom: 0
+
+.page
+  background-color: $background-gray
+  min-height: 600px
+  // margin: 77px auto 0
+  // @include is-mobile-view(true)
+  //  margin: 50px auto 0
+  margin: 222px auto 0
+  @include is-mobile-view(true)
+    margin: 100px auto 0
+
+.branch-banner-is-active
+  .page
+    @include is-mobile-view(true)
+      margin: 126px auto 0
+
+
+.container
+  max-width: $max-width
+  margin: 0 auto
+  position: relative
+
+.banner-container
+  max-width: $max-width-banner
+
+.notification
+  @include font-size(16px)
+  text-align: center
+  line-height: 1.5
+
+  &.header-message
+    position: fixed
+    width: 100%
+    margin-bottom: 0
+    z-index: $z-index-header
+
+  &.is-error
+    background-color: #f2dede
+    color: #973133
+
+  &.is-success
+    // background-color: $button-blue
+    color: $white
+
+.hide
+  display: none
+
+// footer
+.footer
+  background-color: $footer-background
+  color: $white
+  padding: 25px 20px
+  width: 100%
+
+  a
+    &,
+    &:visited
+      color: $white
+
+      &:hover
+        color: $white
+
+    &:not(.icon)
+      border-bottom: 0
+
+  .icon-title
+    @include font-size(14px)
+    letter-spacing: 2.1px
+
+  .footer-icon-wrapper
+    text-align: center
+    width: 100px
+    display: inline-block
+    @include is-mobile-view(true)
+      display: inline
+
+    &.contact-cs
+      width: 170px
+      margin-left: 17%
+      @include is-mobile-view(true)
+        margin-left: 0px
+
+  .button-wrapper
+    position: relative
+    display: inline-block
+
+    .icon-item
+      float: left
+      margin-top: 20px
+
+      &:not(:last-child)
+        margin-right: 10px
+
+      &.icon-item-with-circle
+        &:not(:last-child)
+          margin-right: 20px
+
+  .copyright-wrapper
+    margin-top: 55px
+
+
+  .copyright-title
+    @include font-size(14px)
+    letter-spacing: 1px
+    margin-right: 30px
+
+  .footer-link
+    @include font-size(14px)
+    letter-spacing: 2.1px
+
+    &,
+    &:visited
+      &:hover
+        color: $button-blue
+
+  .line-icon
+    width: 40px
+
+  .footer-items
+    display: inline-block
+
+    li
+      display: inline-block
+
+      + li
+        &::before
+          content: '|'
+          margin: 0 20px
+
+.loader-overlap
+  width: 100%
+  height: 100%
+  position: fixed
+  z-index: $z-index-overlap
+  background-color: rgba(0, 0, 0, 0.5)
+  display: none
+
+.loader
+  border: 16px solid #f3f3f3
+  border-top: 16px solid $button-hover-blue
+  border-radius: 50%
+  top: calc(50% - 60px)
+  left: calc(50% - 60px)
+  width: 120px
+  height: 120px
+  animation: spin 2s linear infinite
+  position: fixed
+  display: none
+  z-index: $z-index-overlap
+
++keyframes(spin)
+  from
+    +transform(rotate(0))
+  to
+    +transform(rotate(360deg))
+
+
+.telephone-icon
+  &:hover
+    .telephone-information
+      display: inline-block
+
+.telephone-information
+  position: absolute
+  display: none
+  width: 220px
+  background-color: $white
+  color: $input-text
+  text-align: left
+  bottom: 50px
+  right: 95px
+  border: solid 1px #979797
+
+  &::before
+    height: 10px
+    width: 100%
+    content: ''
+    position: absolute
+    bottom: -10px
+    display: block
+
+  .info-title
+    @include font-size(15px)
+    letter-spacing: 2.2px
+    font-weight: $font-weight-title
+    padding: 10px
+
+  .info-content
+    @include font-size(14px)
+    letter-spacing: 2.1px
+    padding: 10px
+
+@media screen and (max-width: 1199px)
+  .container
+    max-width: 98%
+
+  .banner-container
+    max-width: 100%
+
+.is-center
+  text-align: center
+.is-left
+  text-align: left
+
+.social-share-button
+  text-align: center
+  margin-bottom: $share-button-size
+  
+  .ssb-icon
+    background-size: $share-button-size $share-button-size
+    height: $share-button-size
+    width: $share-button-size
+
+p.no-gamaitems-message
+  margin: 50px auto 0 auto
+  @include font-size(48px)
+  width: 80%
+  max-width: 640px
+  @include is-mobile-view(true)
+    @include font-size(28px)

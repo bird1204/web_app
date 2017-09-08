@@ -1,0 +1,66 @@
+@import import
+.questions-container
+  width: 100%
+  max-width: 600px
+  margin: auto
+
+.questions-section
+  background-color: $background-gray
+
+.questions-detail
+  width: 100%
+  max-width: 770px
+  margin: 0 auto
+  background-color: $white
+  bquestions-radius: 4px
+  bquestions: solid 1px $border-gray
+  display: block
+
+  .detail-header-row
+    +clearfix
+    background-color: #eceeef
+    width: 100%
+    cursor: pointer
+
+    .detail-title
+      @include font-size(24px)
+      font-weight: $font-weight-title
+      line-height: 1.1
+      color: $form-title
+      padding: 14px 35px
+      float: left
+
+  .row
+    display: inline-block
+    width: 100%
+
+  .questions-total-amount-row
+    padding: 25px 35px 15px 28px
+
+    .total-amount-title
+      @include font-size(24px)
+      line-height: 1
+      color: #4a4a4a
+      float: left
+
+    .total-amount-price
+      @include font-size(30px)
+      font-weight: $font-weight-title
+      color: $price-red
+      float: right
+
+    .link-to-questions
+      margin: auto
+
+  .questions-summary
+    border-top: solid 1px $border-gray
+    border-bottom: solid 1px $border-gray
+    padding: 16px 37px 16px 28px
+
+    .summary-title
+      @include font-size(16px)
+      font-weight: $font-weight-title
+      line-height: 1.5
+      color: $text-black
+      float: left
+      margin-bottom: 15px

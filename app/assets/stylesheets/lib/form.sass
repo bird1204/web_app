@@ -1,0 +1,62 @@
+$tablet: 769px !default
+$size-4: 1.5rem !default
+$size-5: 1.25rem !default
+$size-6: 1rem !default
+$size-7: 0.75rem !default
+
+$size-small: $size-7 !default
+$size-normal: $size-6 !default
+$size-medium: $size-5 !default
+$size-large: $size-4 !default
+
+=mobile
+  @media screen and (max-width: $tablet - 1px)
+    @content
+
+=tablet
+  @media screen and (min-width: $tablet), print
+    @content
+
+// Containers
+
+.field
+  &.is-horizontal
+    +tablet
+      display: flex
+
+.field-label
+  .label
+    font-size: inherit
+  +mobile
+    margin-bottom: 0.5rem
+  +tablet
+    flex-basis: 0
+    flex-grow: 1
+    flex-shrink: 0
+    margin-right: 1.5rem
+    text-align: right
+    &.is-small
+      font-size: $size-small
+      padding-top: 0.375em
+    &.is-normal
+      padding-top: 0.375em
+    &.is-medium
+      font-size: $size-medium
+      padding-top: 0.375em
+    &.is-large
+      font-size: $size-large
+      padding-top: 0.375em
+
+.field-body
+  +tablet
+    display: flex
+    flex-basis: 0
+    flex-grow: 5
+    flex-shrink: 1
+    .field
+      flex-shrink: 1
+      &:not(.is-narrow)
+        flex-grow: 1
+      &:not(:last-child)
+        margin-bottom: 0
+        margin-right: 0.75rem

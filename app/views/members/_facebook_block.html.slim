@@ -1,0 +1,8 @@
+p.control.has-icon
+  = email_field_tag 'new_email', nil, class: 'signin-input', placeholder: "修改連絡信箱(若不修改，留空即可)"
+  span.input-icon
+    = render partial: "svg/email"
+p.control.has-icon.hide
+  input.signin-input type="email" name="confirm-email" placeholder="輸入相同的E-mail" data-dependent-validation="new_email" data-errormessage-dependent="E-mail不一致，請重新輸入"
+  span.input-icon
+    = render partial: "svg/email"

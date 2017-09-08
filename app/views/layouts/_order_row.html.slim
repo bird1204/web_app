@@ -1,0 +1,24 @@
+.order-row
+  .order-image
+    = image order.gamaitems[0]["product_image"], "", [:preload, :thumb]
+  .row
+    .order-information
+      .info-item
+        | 購買日期：&nbsp;
+        = order.created_at.to_date.to_s("%F")
+      .info-item
+        | 訂單編號：&nbsp;
+        = order.ordernumber
+    .order-status class=("status-done" if order.situation_of_cargo_id == 4)
+      - case order.situation_of_cargo_id
+        - when 1
+          | 收到訂單
+        - when 2
+          | 處理中
+        - when 3
+          | 已出貨
+        - when 4
+          | 已送達
+    .order-price
+      | $
+      = order.totalprice

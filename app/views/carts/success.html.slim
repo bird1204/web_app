@@ -1,0 +1,12 @@
+= render partial: "layouts/order_detail"
+javascript:
+  dataLayer.push(#{step_n_datalayer(3).to_json.html_safe})
+
+  fbq('track', 'Purchase', {
+      content_type: 'product',
+      content_ids: [#{@order.gamaitems.collect{|i| i['gamaid']}.join(',')}],
+      value: #{@subtotal}, //REQUIRED
+      currency: 'TWD' //REQUIRED
+  });
+
+  dataLayer.push(#{@order.to_ga_enhanced_ec_data.to_json.html_safe});

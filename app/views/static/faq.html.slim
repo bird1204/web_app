@@ -1,0 +1,149 @@
+- content_for :title do
+  = "常見問題"
+
+- content_for :meta_tag do 
+  = render partial: "layouts/meta", :locals => { description: '常見問題'}
+  
+section.section.static-section
+  .container.faq-container
+    h4.page-title
+      | 常見問題
+
+    .question-wrapper
+      .question
+        | 1. 提供付款方式?
+        .arrow-icon.arrow-icon-up
+        .arrow-icon.arrow-icon-down.hide
+      .answer.hide
+        | 目前網站提供宅配貨到付款、超商取貨付款兩種付款方式。
+
+    .question-wrapper
+      .question
+        | 2. 大概幾天可收到貨?
+        .arrow-icon.arrow-icon-up
+        .arrow-icon.arrow-icon-down.hide
+      .answer.hide
+        | 宅配正常上午下單，隔天到貨(晚上下單會後天到貨)。 超商取貨付款(2-3個工作天，到門市會簡訊通知)。
+
+    .question-wrapper
+      .question
+        | 3. 為什麼無法超商取貨?
+        .arrow-icon.arrow-icon-up
+        .arrow-icon.arrow-icon-down.hide
+      .answer.hide
+        | 超商系統有容積大小限制，如果東西累積超出即無法使用，建議您可以使用宅配貨到付款。
+
+    .question-wrapper
+      .question
+        | 4. 外島是否有配送？
+        .arrow-icon.arrow-icon-up
+        .arrow-icon.arrow-icon-down.hide
+      .answer.hide
+        | 目前無配送海外、外島地區(澎湖、金門、馬祖、蘭嶼、綠島、小琉球)。
+
+    .question-wrapper
+      .question
+        | 5. 任何商品受損有問題收退貨時間?
+        .arrow-icon.arrow-icon-up
+        .arrow-icon.arrow-icon-down.hide
+      .answer.hide
+        | 商品於7天內可退貨退款，退款會統一用匯款方式(須提供哪家銀行(代號)、戶名、帳號)，退款需14個工作天退款會在通知。
+
+    .question-wrapper
+      .question
+        | 6. 運費多少?
+        .arrow-icon.arrow-icon-up
+        .arrow-icon.arrow-icon-down.hide
+      .answer.hide
+        | 全館不限商品，滿649免運，未滿649運費90元。
+
+    .question-wrapper
+      .question
+        | 7. 下單後若訂單有問題？
+        .arrow-icon.arrow-icon-up
+        .arrow-icon.arrow-icon-down.hide
+      .answer.hide
+        | 如訂單有缺貨或是無法使用超取、電話、地址有誤，我們會以簡訊或電話通知，超過7天未有回應會自動取消訂單。
+  .container.faq-container
+    h4.page-title
+      | 商品相關問題
+
+    .question-wrapper
+      a href=new_member_services_path(question_id: 11)
+        .question
+          | 1. 我要的商品什麼時候補貨
+
+
+    .question-wrapper
+      a href=new_member_services_path(question_id: 12)
+        .question
+          | 2. 我覺得商品太貴了
+
+
+    .question-wrapper
+      a href=new_member_services_path(question_id: 13)
+        .question
+          | 3. 我有其他商品問題
+
+
+  .container.faq-container
+    h4.page-title
+      | App功能建議
+
+    .question-wrapper
+      a href=new_member_services_path(question_id: 14)
+        .question
+          | 1. 商品
+
+    .question-wrapper
+      a href=new_member_services_path(question_id: 15)
+        .question
+          | 2. 服務
+
+    .question-wrapper
+      a href=new_member_services_path(question_id: 16)
+        .question
+          | 3. App功能
+
+  .container.faq-container
+    h4.page-title
+      | 廠商提案合作
+
+    .question-wrapper
+      a href=new_member_services_path(question_id: 17)
+        .question
+          | 1. 商品合作
+
+    .question-wrapper
+      a href=new_member_services_path(question_id: 18)
+        .question
+          | 2. 通路合作
+
+    .question-wrapper
+      a href=new_member_services_path(question_id: 19)
+        .question
+          | 3. 其他合作
+
+
+  .container.faq-container
+    h4.page-title
+      | 與我們互動
+      
+    - if Time.now.between?(Time.parse("#{Date.today} 09:00:00"), Time.parse("#{Date.today} 19:00:00"))
+      .question-wrapper
+        a href="tel:0225472827"
+          .question 
+            | 1. 電話（一到五，09:00~19:00）
+      .question-wrapper
+        a rel="nofollow" href="http://bit.ly/Gamadian_LINE"
+          .question 
+            | 2. Line（一到日，09:00~19:00）
+
+    .question-wrapper
+      a href="mailto:cservice.gamadian@jumplife.com.tw?subject=[甘仔店-聯絡我們]"
+        .question 
+          | 3. Email（一到日，09:00~19:00）
+
+
+- content_for :javascript do
+  = javascript_include_tag 'faq', defer: 'defer'

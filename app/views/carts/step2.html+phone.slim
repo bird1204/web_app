@@ -1,0 +1,143 @@
+- content_for :javascript do
+  = javascript_include_tag 'checkout', defer: 'defer'
+
+.cart-checkout
+  = render partial: "carts/order_header", :locals => {step: 2}
+section.section.checkout-section
+  .container
+    = form_tag carts_checkout_2_path do
+
+      .form-section
+        h4.title
+          | 訂購資料
+        = text_field_tag :name, @buf[:name] || current_member.try(:name), placeholder: "姓名" , required: true, class: "input-field"
+        = telephone_field_tag :phone, @buf[:phone] || current_member.try(:phone_number), placeholder: "手機", required: true, pattern: "^0[2-9][0-9]{6,8}$", data: {errormessage: "請確認手機號碼格式"}, class: "input-field"
+        .input-padding
+          = email_field_tag :email, @buf[:email] || current_member.try(:email), placeholder: "E-mail", required: true, class: "input-field"
+        - unless signed_in?
+          = password_field_tag :password, nil, placeholder: "設定密碼(至少8碼)", required: true, class: "input-field"
+
+          p.order-information-wording
+            | 訂單資訊將會以此 E-mail 通知您，此 E-mail 也會成為您的甘仔店會員帳號！
+
+      - if session['checkout_step1']['deliverymethod'].to_i == 1
+        .form-section#convenience-stores
+          h4.title
+            | 超商取貨
+          .input-row
+            = text_field_tag :conveniencedstorename, @buf[:conveniencedstorename], placeholder: "請選擇取貨門市" , required: true, class: 'input-with-button convenience-store-button'
+            = hidden_field_tag 'conveniencestoreid', @buf[:conveniencestoreid]
+            button.convenience-store-button.gama-button type="button"
+              | 門市
+              = hidden_field_tag 'address', @buf[:address]
+      - else
+        .form-section
+          h4.title
+            | 宅配寄送資料
+
+          .input-padding
+          #address
+            .input-row#twzipcode
+              .input-city
+                = content_tag(:div, nil, data: {role: "county", value: current_member.try(:city), name: "city", style: "input-field"})
+              .input-city
+                = content_tag(:div, nil, data: {role: "district", value: current_member.try(:city_area), name: "area", style: "input-field"})
+            = text_field_tag :address, @buf[:address] || current_member.try(:address), placeholder: "地址", class: "input-field"
+
+      .form-section
+        h4.title
+          | 發票方式
+
+        label for="invoice-types1"
+          .radio-box
+            span.radio-title
+              = radio_button_tag 'invoice_types', '0', @buf[:invoice_types] == '0', id: 'invoice-types1'
+              | 電子發票
+
+        label for="invoice-types2"
+          .radio-box
+            span.radio-title
+              = radio_button_tag 'invoice_types', '1', @buf[:invoice_types] == '1', id: 'invoice-types2'
+              | 捐贈發票
+
+        label for="invoice-types3"
+          .radio-box
+            span.radio-title
+              = radio_button_tag 'invoice_types', '2', @buf[:invoice_types] == '2', id: 'invoice-types3'
+              | 紙本發票
+
+      .form-section#donation
+        h4.title
+          | 請選擇捐贈單位
+
+        label for="foundation-types1"
+          .radio-box
+            span.radio-title
+              = radio_button_tag 'foundation_id', '876', @buf[:foundation_id] == '876', id: 'foundation-types1'
+              | 財團法人心路社會福利基金會
+
+        label for="foundation-types2"
+          .radio-box
+            span.radio-title
+              = radio_button_tag 'foundation_id', '885521', @buf[:foundation_id] == '885521', id: 'foundation-types2'
+              | 財團法人中華民國兒童福利聯盟文教基金會
+
+        label for="foundation-types3"
+          .radio-box
+            span.radio-title
+              = radio_button_tag 'foundation_id', '25885', @buf[:foundation_id] == '25885', id: 'foundation-types2'
+              | 財團法人伊甸社會福利基金會
+
+      .form-section#invoice-info
+        h4.title
+          | 發票資訊
+
+        = text_field_tag :invoice_buyer_ubn, @buf[:invoice_buyer_ubn], placeholder: "請輸入您的統一編號", required: true, pattern: "^[0-9]{8}$", value: nil, data: {errormessage: '請輸入8碼數字'}
+        = text_field_tag :invoice_buyer_title, @buf[:invoice_buyer_title], placeholder: "請輸入您的發票抬頭", required: true, pattern: "^\\S+$", value: nil, data: {errormessage: '請輸入不含空白的抬頭'}
+        = text_field_tag :invoice_delivery_address, @buf[:invoice_delivery_address], placeholder: "請輸入您的發票寄送地址", required: true, value: nil, required: true, pattern: "^\\S+$", data: {errormessage: '請輸入不含空白的地址'}
+
+      .form-section#invoice-container
+        h4.title
+          | 請選擇發票載具
+
+        label for="carrier-types1"
+          .radio-box
+            span.radio-title
+              = radio_button_tag 'carrier_type', '0', @buf[:carrier_type] == '0', id: 'carrier-types1'
+              | 甘仔店發票載具
+        label for="carrier-types2"
+          .radio-box
+            span.radio-title
+            = radio_button_tag 'carrier_type', '1', @buf[:carrier_type] == '1', id: 'carrier-types2'
+            | 自然人憑證載具
+        = text_field_tag 'carrier_num', @buf[:carrier_num], placeholder: '輸入您的自然人憑證載具代碼', id: 'carrier-type-personal', required: true
+
+        label for="carrier-types3"
+          .radio-box
+            span.radio-title
+              = radio_button_tag 'carrier_type', '2', @buf[:carrier_type] == '2', id: 'carrier-types3'
+              | 手機條碼載具
+        = text_field_tag 'carrier_num', @buf[:carrier_num], placeholder: '輸入您的手機條碼載具代碼', id: 'carrier-type-phone', required: true
+
+      = render partial: 'carts/order_preview'
+
+      .form-section
+        .input-padding
+        .input-row
+          = link_to carts_checkout_path
+            .back-button
+              | < 回上一步
+          = submit_tag '送出訂單 >', class: 'action-button'
+
+= render partial: "carts/convenience_stores"
+
+javascript:
+  dataLayer.push(#{step_n_datalayer(2, @cart).to_json.html_safe})
+  fbq('track', 'AddPaymentInfo', { 
+      content_type: 'product',
+      content_category: #{@cart.delivery_method}, 
+      content_ids: #{@cart.line_items.map(&:gamaitem_id)}, 
+      value: #{@cart.total_amount - @cart.coupon_value}, 
+      currency: 'TWD'
+    }
+  )

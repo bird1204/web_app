@@ -1,0 +1,558 @@
+@import import
+
+.banner-slides-wrapper
+  background-color: transparent
+  min-height: 300px
+  position: relative
+  @include is-mobile-view(true)
+    min-height: 150px
+
+  .slider-btn
+    background: $alpha-white-5
+    border-radius: 50%
+    color: $alpha-white-7
+    cursor: pointer
+    font-size: 30px
+    height: 40px
+    line-height: 20px
+    margin: 0 6px
+    padding: 10px
+    position: absolute
+    text-align: center
+    top: 48%
+    width: 40px
+    z-index: $z-index-banner-slide-button
+    @include is-mobile-view(true)
+      top: 30%
+
+    &.prev-btn
+      left: 0
+
+    &.next-btn
+      right: 0
+
+  .image-container
+    background-position: 50%
+    background-repeat: no-repeat
+    background-size: cover
+    height: auto
+    width: 100%
+    display: block
+
+.product-price
+  font-weight: $font-weight-bold
+
+.section-title
+  @include font-size(36px)
+  text-align: center
+  font-weight: $font-weight-title
+  letter-spacing: .8px
+  color: $title-black
+  margin: 35px 0px 0px 0px
+
+  &:not(:last-child)
+    margin-bottom: 0px
+
+.hero
+  background-color: $background-gray
+
+.classification-wrapper
+  margin: 0 auto
+
+  width: 100%
+  text-align: center
+
+  .row
+    position: relative
+    margin: 0 auto
+    width: 100%
+    display: inline-block
+    padding-bottom: 30px
+
+  .classification-box
+    height: 200px
+    max-width: 550px
+    max-height: 240px
+    margin: 10px
+    display: inline-block
+
+    &.classification-box-large
+      max-width: 648px
+      max-height: 158px
+
+    &.topic-box
+      height: 200px
+
+    .classification-image
+      width: auto
+      height: 100%
+      border-radius: 8px
+      display: block
+
+  .classification-box-phone
+    max-width: $max-width-banner
+
+    &.topic-box-large
+      margin-top: 15px
+      padding: 0px 10px
+    .classification-image-phone
+      width: 100%
+      display: block
+      border-radius: 8px
+
+  .box-padding
+    width: 30px
+    display: inline-block
+
+.app-download-wrapper
+  background-color: $gama-blue
+  color: $white
+  position: relative
+  display: inline-block
+  text-align: center
+  width: 100%
+  padding: 0
+
+  .text-container
+    width: 61%
+    float: left
+    @include is-mobile-view(true)
+      width: 100%
+
+    .title
+      @include font-size(48px)
+      color: $white
+      font-weight: 600
+      padding-top: 35px
+
+    .sub-title
+      @include font-size(36px)
+      padding-top: 20px
+
+    .logo-image
+      min-width: 200px
+      width: 35%
+
+    .app-download-button
+      padding: 25px 0
+      display: inline-block
+      width: 350px
+      position: relative
+      .is-mobile
+        width: 40%
+        margin: 0px 0px 0px 16%
+
+
+  .app-snapshot-container
+    width: 27%
+    overflow: hidden
+    position: absolute
+    right: 17%
+    bottom: -5px
+  
+  .app-snapshot-container-is-mobile
+    @extend .app-snapshot-container
+    right: 6%
+
+
+.item-wrapper
+  max-width: 1160px
+  margin: 0 auto
+  background-color: $background-gray
+
+  a
+    &,
+    &:visited
+      color: $white
+
+      &:hover
+        color: $white
+
+  .card
+    width: 370px
+    border-radius: 12px
+    box-shadow: none
+    margin: auto
+
+
+  .item-country-icon
+    border-top-left-radius: 12px
+    border-top-right-radius: 12px
+
+  .item-title
+    @include font-size(16px)
+    font-weight: 500
+    color: #4a4a4a
+
+  .item-price
+    @include font-size(24px)
+    color: $price-red
+    font-weight: 600
+    letter-spacing: .7px
+
+  .item-original-price
+    @include font-size(14px)
+    font-weight: 600
+    letter-spacing: .3px
+    text-align: center
+    color: #939393
+    text-decoration: line-through
+    padding-left: 10px
+
+  .add-to-cart-button
+    @include font-size(20px)
+    @include remove-button-style
+    letter-spacing: 2.9px
+    text-align: center
+    background-color: $price-red
+    color: $white
+    border-radius: 6px
+    padding: 8px 20px
+
+    &:hover
+      background-color: $button-hover-red
+
+  .pull-up
+    margin-top: -3em
+    margin-right: 1em
+
+// topic page
+.menu-bar
+  width: 100%
+  margin: auto
+  display: inline-block
+  padding: 30px 5% 20px 5%
+  border-bottom: solid 2px #979797
+
+  a
+    &,
+    &:visited
+      color: #373a3c
+
+      &:hover
+        color: #373a3c
+
+  .dropdown-menu
+    float: left
+    @include is-mobile-view(true)
+      width: 95%
+
+    &.sort-menu
+      margin-left: 100px
+      @include is-mobile-view(true)
+        margin-left: 0
+
+      .item-title
+        text-align: center
+        padding: 0
+
+    .menu-icon
+      width: 20px
+      float: left
+      margin-right: 40px
+
+    .menu-title
+      @include font-size(16px)
+      line-height: 1.3
+      color: $form-title
+      float: left
+      cursor: pointer
+      @include is-mobile-view(true)
+        @include font-size(20px)
+
+      &::after
+        @include font-size(20px)
+        content: ' ▾'
+
+    .classification-title
+      @include font-size(26px)
+      font-weight: 600
+      line-height: .8
+      color: #373a3c
+      @include is-mobile-view(true)
+        @include font-size(20px)
+
+    .menu-item
+      width: 190px
+      z-index: $z-index-dropdown-menu
+      position: absolute
+      margin-top: 44px
+      margin-left: -50px
+      border: solid 1px #dcdcdc
+      border-radius: 4px
+      display: none
+
+      &.topic-menu-item
+        width: 300px
+        &.is-mobile
+          // width: 50%
+          margin: 40px 5% 0px 5%
+
+
+    .country-menu-title
+      border-bottom: solid 1px #dcdcdc
+
+      &:hover
+        .country-menu
+          display: block
+
+    .country-menu
+      width: 190px
+      z-index: $z-index-dropdown-menu
+      position: absolute
+      border: solid 1px #dcdcdc
+      border-radius: 4px
+      display: none
+      right: -210px
+      top: 0
+
+      &::before
+        width: 20px
+        height: 330px
+        content: ''
+        position: absolute
+        display: block
+        left: -20px
+
+    .item-block
+      padding: 10px 20px
+
+      display: inline-block
+      width: 100%
+      background-color: $white
+
+    .item-block + .item-block
+      border-top: solid 1px #dcdcdc
+
+    .item-title
+      @include font-size(16px)
+      line-height: 45px
+      color: #373a3c
+      padding-left: 30px
+
+      &.active
+        color: $button-blue
+
+      &.country-item
+        &::after
+          @include font-size(18px)
+          content: '▸'
+          position: absolute
+          left: 150px
+
+.pagination-wrapper
+  background-color: $background-gray
+
+.topic-description
+  @include font-size(22px)
+  font-size: 22px
+  line-height: 1.6
+  letter-spacing: 1.1px
+  color: #373a3c
+  padding: 48px 0
+  @media all and (max-width: 959px)
+    padding: 18px 6px 18px 6px
+    @include font-size(12px)
+    font-size: 12px
+
+
+@media screen and (max-width: 1200px)
+  .menu-bar
+    padding-left: 5%
+
+@media screen and (max-width: 1024px)
+  .classification-wrapper
+    .classification-box
+      height: 150px
+      &.topic-box
+        height: 120px
+
+@media screen and (max-width: 768px)
+  .classification-wrapper
+    .classification-box
+      height: 110px
+
+      &.topic-box
+        height: 85px
+
+    .box-padding
+      width: 38px
+
+.menu-group
+  margin-top: 5%
+  margin-left: 15%
+  border: solid 1px #dcdcdc
+  border-radius: 8px
+  background-color: white
+
+  .item-block
+    @include font-size(17px)
+    border-radius: 8px
+
+    display: block
+    width: 100%
+    background-color: $white
+
+  .item-block + .item-block
+    border-top: solid 1px #dcdcdc
+    border-radius: 0px 0px 8px 8px
+
+  .item-title
+    @include font-size(15px)
+    font-weight: bold
+    letter-spacing: 2px
+    color: $text-black
+    text-align: left
+    padding: 6%
+
+    &:hover
+      color: $button-blue
+    &.active
+      color: $button-hover-blue
+    &.sub-item
+      background: $background-gray
+
+  .main-item
+    font-weight: bold
+    padding: 6%
+    &.active
+      color: $button-hover-blue
+
+  #list
+    max-height: 0
+    overflow: hidden
+    -moz-transition: 0.5s linear /* firefox */
+    -webkit-transition: 0.5s linear /* Safari */
+    transition: 0.5s linear
+
+.filter-section
+  margin-top: 2%
+  &.no-margin
+    margin: 0%
+
+  .filter-group
+    text-align: left
+    padding-top: 3%
+    background-color: white
+    &.no-background
+      background-color: transparent
+
+    .filter-item
+      margin-right: 2%
+      margin-bottom: 2%
+
+    &.no-padding
+      padding: 0px
+
+    input[type=checkbox]:checked:after
+      content: $button-blue
+
+  .filter-group-button
+    width: 100%
+    padding: 1% 0
+    text-align: right
+    background: white
+    border-top: solid 1px #dcdcdc
+
+    &.no-padding
+      padding: 0px
+
+    span
+      margin: 0% 1% 0% 0%
+
+    .filter-group-button-item
+      margin: 0% 1% 0% 0% 
+      padding-left: 1%
+      padding-right: 1%
+    
+  .button-no-radius
+    border-radius: 0px
+
+#filter_sidebar
+  width: 85%
+  height: calc(100% - 50px)
+  right: 0
+  background: $background-gray
+  z-index: $z-index-overlap
+
+  .content
+    margin-bottom: 35px
+
+  .bottom
+    width: 85%
+    position: fixed
+    bottom: 0
+
+  .button_custom
+    margin: 1%
+
+  .footer
+    background-color: transparent
+    padding: 0px
+    bottom: 0
+
+  .button-no-radius
+    border-radius: 0px
+
+  #checkbox_button
+    margin: 2px
+    background-color: $box-gray
+    border-radius: 4px
+    overflow: auto
+    float: left
+    label
+      float: left
+      width: 5.0em
+      span
+        text-align: center
+        padding: 3px 6px
+        display: block
+        border-radius: 4px
+      input
+        position: absolute
+        top: -20px
+        visibility: hidden
+    input
+      &:checked
+        + span
+          background-color: $button-hover-red
+          color: white
+
+.sort-section
+  &.is-mobile
+    position: fixed
+    width: 100%
+    background: white
+    z-index: $z-index-banner-slide-button
+
+  li
+    border: 0px
+
+  a
+    font-weight: bold
+
+    &.is-active
+      color: $button-blue
+
+.table
+  background-color: transparent
+  thead
+    td, th
+      border-width: 1px 0 0 0
+      color: #7a7a7a
+  thead.theader
+    cursor: pointer
+
+  .theader
+    .sign:after
+      font-family: FontAwesome
+      content: "\f078"
+      display: inline-block
+    &.expand .sign:after
+      font-family: FontAwesome
+      content: "\f077"
+
+  tbody
+    td, th
+      border-width: 0px
+

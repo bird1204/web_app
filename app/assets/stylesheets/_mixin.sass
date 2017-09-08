@@ -1,0 +1,23 @@
+@function calculate-rem($size)
+  $rem-size: $size / $rem-baseline
+  @return #{$rem-size}rem
+
+@mixin font-size($size)
+  font-size: calculate-rem($size)
+
+
+@mixin remove-button-style
+  overflow: visible
+  margin: 0
+  padding: 0
+  border: 0
+  background: transparent
+  font: inherit
+  line-height: normal
+  cursor: pointer
+  -moz-user-select: text
+
+@mixin is-mobile-view($is-mobiles: false)
+  @each $is-mobile in $is-mobiles
+    html[is-mobile-devise*="#{$is-mobile}"] &
+      @content

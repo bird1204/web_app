@@ -1,0 +1,23 @@
+.container
+  .member-area
+    .member-nav
+      = link_to members_orders_path, class: "member-nav-item active"
+        | 我的訂單
+      = link_to members_coupons_path, class: "member-nav-item"
+        | 我的優惠券         
+    .content-container
+      .tabs
+        ul
+          li class=("is-active" if params[:show] == "ing")
+            a href="?show=ing"
+              | 進行中的訂單
+          li class=("is-active" if params[:show] == "done")
+            a href="?show=done"
+              | 已完成的訂單
+      
+      - @orders.each do |order|
+        = link_to order_id_path(id: order.ordernumber)
+          - if params[:show] == "ing" and order.situation_of_cargo_id != 4
+            = render partial: "layouts/order_row", :locals => {order: order}
+          - elsif params[:show] == "done" and order.situation_of_cargo_id == 4
+            = render partial: "layouts/order_row", :locals => {order: order}

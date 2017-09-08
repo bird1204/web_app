@@ -1,0 +1,111 @@
+- content_for :javascript do
+  = javascript_include_tag "member_services_5", defer: 'defer'
+
+javascript:
+  window.order_json = '#{@order.to_json.html_safe}'
+
+section.section.order-section
+  .container
+    = form_for @member_service do |f|
+      .order-detail
+        .detail-header-row
+          = render partial: 'member_services/new/title', :locals => {question_id: question_id, f: f}
+        .detail-body
+          .order-summary
+            = render partial: "member_services/new/order_default_info", locals: {f: f}
+          .order-summary
+            = f.fields_for :comment do |field|
+              table.table#order_items_table
+                thead
+                  tr
+                    th
+                      .is-center
+                        | 商品名稱
+                    th
+                      .is-center
+                        | 可退數量
+                    th
+                      .is-center
+                        | 商品價錢
+                    th
+                      .is-center
+                        | 欲退數量
+                tbody
+                  = render partial: 'member_services/new/order_gamaitems', :locals => {gamaitems: @order.gamaitems, browser: browser, field: field, question_id: question_id}
+            .is-center
+              = link_to "取消整筆訂單", "#", onclick: 'window.updateAmount(true)', class: 'button is-medium is-primary is-outlined'
+            br
+            = render partial: "member_services/new/order_total", locals: {f: f}
+
+          - if !(@order.deliverymethod == 3 || @order.deliverymethod == 4)
+            .order-summary
+              .row
+                .description
+                  | 退款帳號
+              = f.fields_for :comment do |ff|
+                = ff.fields_for :account do |field|
+                  .control.is-horizontal
+                    .control-label
+                      = field.label :bank, '銀行名稱', {class: 'label summary-title'}
+                    .control
+                      = field.text_field :bank,  placeholder: '請填寫你指定退款的銀行名稱', required: true, class: 'input'
+                  .control.is-horizontal
+                    .control-label
+                      = field.label :identify, '分行名稱', {class: 'label summary-title'}
+                    .control
+                      = field.text_field :identify,  placeholder: '帳戶的銀行分行名稱', required: true, class: 'input'
+                  .control.is-horizontal
+                    .control-label
+                      = field.label :account, '帳號', {class: 'label summary-title'}
+                    .control
+                      = field.text_field :account,  placeholder: '請仔細填寫完整的退款帳號', required: true, class: 'input'
+                  .control.is-horizontal
+                    .control-label
+                      = field.label :name, '帳戶', {class: 'label summary-title'}
+                    .control
+                      = field.text_field :name,  placeholder: '你的銀行帳戶名稱', required: true, class: 'input'
+          - else
+            = f.fields_for :comment do |ff|
+              = ff.fields_for :account do |field|
+                = field.hidden_field :bank
+                = field.hidden_field :identify
+                = field.hidden_field :account
+                = field.hidden_field :name
+
+          .order-summary
+            .row
+              .description
+                | 請填寫以下資料，我們將派物流人員收回商品！
+              = f.fields_for :comment do |ff|
+                = ff.fields_for :cargo do |field|
+                  .control.is-horizontal
+                    .control-label.summary-title
+                      | 收件人&nbsp&nbsp&nbsp&nbsp
+                    .control.is-expanded
+                      = field.text_field :name,  placeholder: '請輸入姓名', required: true, class: 'input is-expanded'
+                  .control.is-horizontal
+                    .control-label.summary-title
+                      | 手機電話
+                    .control
+                      = field.text_field :phone,  placeholder: '請輸入手機電話', required: true, class: 'input is-expanded'
+                  .control.is-horizontal
+                    .control-label.summary-title
+                      | 收貨地址&nbsp
+                    .control#twzipcode
+                      = content_tag(:p, nil, data: {role: "county", name: "member_service[comment][cargo][city]"}, class: ['control', 'select', 'is-fullwidth'])
+                      = content_tag(:p, nil, data: {role: "district", name: "member_service[comment][cargo][city_area]"}, class: ['control', 'select', 'is-fullwidth'])
+                  .control.is-horizontal
+                    .control-label.summary-title
+                      |
+                    .control.is-expanded
+                      = field.text_field :address,  placeholder: 'xx路xx巷xx號', required: true, class: 'input'
+                .control.is-horizontal
+                  .control-label.summary-title
+                    | 退訂原因&nbsp
+                  .control
+                    = ff.text_area :reason,  placeholder: '請輸入退訂原因', required: true, class: 'textarea is-expanded'
+              .description
+                - if @order.deliverymethod == 3 || @order.deliverymethod == 4
+                  | 送出退訂申請後，信用卡付款部分我們將會進行刷退，請放心！
+          .order-total-amount-row.row
+            = f.submit '提交', class: 'submit'

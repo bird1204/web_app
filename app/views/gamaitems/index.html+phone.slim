@@ -1,0 +1,36 @@
+- content_for :meta_tag do 
+  = render partial: "layouts/meta", :locals => { android_link: "android-app://com.jumplife.gamadian/", ios_link: "ios-app://919357962/"}
+
+- content_for :javascript do
+  = javascript_include_tag 'lib/owl.carousel.min', defer: 'defer'
+  = javascript_include_tag 'gamaitems', defer: 'defer'
+
+section
+  .container.banner-container
+    .banner-slides-wrapper
+      #owl-slider.owl-carousel.owl-theme
+        - @meta['covers'].each do |cover|
+          = cover_reaction cover, :mini
+      .slider-btn.prev-btn data-side="prev"
+        | &#10094;
+      .slider-btn.next-btn data-side="next"
+        | &#10095;
+
+section.hero
+  .hero-topic-body
+    .banner-container
+      h4.title.section-title
+        | 精選主題
+      .classification-wrapper
+        - @topics.each_with_index do |collection, index|
+          - collection.each do |topic|
+            = link_to topic_path(id: topic.id), title: topic.name
+                .classification-box-phone.topic-box-large
+                  = image topic.image_url, topic.name, [:mini, :small], 'classification-image-phone'
+
+section.hero
+  .hero-body
+    .container
+      h4.title.section-title
+        | 店長推薦
+= render partial: 'layouts/items', :locals => {gamaitems: Array(@gamaitems)}

@@ -1,0 +1,17 @@
+section.section.order-section
+  .container
+    = form_for @member_service do |f|
+      .order-detail
+        .detail-header-row
+          = render partial: 'member_services/new/title', :locals => {question_id: question_id, f: f}
+        .detail-body
+          .order-summary
+            = render partial: 'member_services/new/usual_contact_info', :locals => {f: f}
+            = f.fields_for :comment do |field|
+              .row
+                .summary-title
+                  = f.label :message, '你的建議'
+                .summary-price.full-width
+                  = field.text_area :message,  placeholder: '你的建議', class: 'textarea', required: true
+          .order-total-amount-row.row
+            = f.submit '提交', class: 'submit'
